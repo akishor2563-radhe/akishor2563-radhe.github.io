@@ -3,710 +3,828 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A Kishor | Interactive BI & Data Portfolio</title>
+  <title>A Kishor | Quantum BI & Analytics OS</title>
 
-  <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <!-- Google Fonts & FontAwesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+
+  <!-- Chart.js for Live Interactive Charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     :root {
-      --bg: #030712;
-      --card-bg: rgba(17, 24, 39, 0.65);
-      --card-border: rgba(255, 255, 255, 0.08);
+      --bg: #020611;
+      --card: rgba(13, 20, 36, 0.72);
+      --border: rgba(255, 255, 255, 0.08);
       --primary: #38bdf8;
-      --primary-glow: rgba(56, 189, 248, 0.35);
+      --primary-rgb: 56, 189, 248;
       --secondary: #818cf8;
       --accent: #10b981;
-      --warning: #f59e0b;
+      --gold: #f59e0b;
       --text: #f8fafc;
-      --text-muted: #94a3b8;
+      --muted: #94a3b8;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
     html { scroll-behavior: smooth; }
 
     body {
       background-color: var(--bg);
       color: var(--text);
-      line-height: 1.6;
       overflow-x: hidden;
-      position: relative;
+      line-height: 1.6;
     }
 
-    /* Animated Cyber Grid Background */
-    .bg-grid {
+    /* 1. Futuristic Boot Loader */
+    #boot-screen {
       position: fixed;
       inset: 0;
-      background-image: 
-        linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 45px 45px;
-      mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
-      -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
-      z-index: -2;
-      pointer-events: none;
-    }
-
-    /* Mouse Cursor Spotlight */
-    #spotlight {
-      position: fixed;
-      width: 600px;
-      height: 600px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.11) 0%, rgba(129, 140, 248, 0.05) 40%, transparent 70%);
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      z-index: -1;
-      transition: width 0.2s, height 0.2s;
-    }
-
-    /* Floating Glass Navbar */
-    nav {
-      position: fixed;
-      top: 1.25rem;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(15, 23, 42, 0.75);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--card-border);
-      padding: 0.6rem 1.5rem;
-      border-radius: 9999px;
-      display: flex;
-      align-items: center;
-      gap: 1.75rem;
-      z-index: 100;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-    }
-
-    nav a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 600;
-      transition: color 0.2s;
-    }
-
-    nav a:hover { color: var(--primary); }
-
-    .nav-logo {
-      color: #fff !important;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .nav-logo span { color: var(--primary); }
-
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
-
-    /* Hero Section */
-    header {
-      min-height: 92vh;
+      background: #020611;
+      z-index: 9999;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      text-align: center;
-      padding: 7rem 0 3rem;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    #boot-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .boot-box {
+      width: min(440px, 90%);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .boot-title {
+      color: var(--primary);
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      margin-bottom: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .boot-bar-bg {
+      width: 100%;
+      height: 6px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 0.85rem;
+    }
+
+    .boot-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      box-shadow: 0 0 20px var(--primary);
+      transition: width 0.15s ease;
+    }
+
+    .boot-logs {
+      font-size: 0.75rem;
+      color: var(--muted);
+      height: 65px;
+      overflow: hidden;
+    }
+
+    /* 2. Interactive Particle Network Canvas */
+    #neural-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Floating OS Top Bar */
+    nav {
+      position: fixed;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10, 15, 29, 0.8);
+      backdrop-filter: blur(18px);
+      border: 1px solid var(--border);
+      padding: 0.55rem 1.4rem;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      z-index: 100;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.6);
+    }
+
+    .brand {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: #fff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .brand span {
+      background: rgba(var(--primary-rgb), 0.15);
+      color: var(--primary);
+      padding: 0.1rem 0.45rem;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+    }
+
+    .nav-links { display: flex; gap: 1.2rem; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    .nav-links a:hover { color: var(--primary); }
+
+    /* Theme Switcher Dots */
+    .theme-dots {
+      display: flex;
+      gap: 0.4rem;
+      border-left: 1px solid var(--border);
+      padding-left: 1rem;
+    }
+
+    .t-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid rgba(255,255,255,0.2);
+      transition: transform 0.2s;
+    }
+    .t-dot:hover { transform: scale(1.25); }
+
+    .container {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 6.5rem 1.5rem 3rem;
+    }
+
+    /* Bento Grid Hero Command Center */
+    .bento-hero {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .bento-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 2rem;
+      backdrop-filter: blur(16px);
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .bento-card:hover {
+      border-color: rgba(var(--primary-rgb), 0.45);
+      box-shadow: 0 18px 45px -15px rgba(var(--primary-rgb), 0.2);
+    }
+
+    .profile-row {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      margin-bottom: 1.2rem;
     }
 
     .profile-img {
-      width: 125px;
-      height: 125px;
+      width: 78px;
+      height: 78px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid var(--primary);
-      box-shadow: 0 0 35px var(--primary-glow);
-      margin-bottom: 1.25rem;
+      border: 2px solid var(--primary);
+      box-shadow: 0 0 25px rgba(var(--primary-rgb), 0.35);
     }
 
-    .hud-badge {
+    .status-pill {
       display: inline-flex;
       align-items: center;
-      gap: 0.6rem;
-      background: rgba(16, 185, 129, 0.1);
+      gap: 0.5rem;
+      background: rgba(16, 185, 129, 0.12);
       border: 1px solid rgba(16, 185, 129, 0.3);
       color: #34d399;
-      padding: 0.4rem 1.1rem;
-      border-radius: 9999px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.03em;
+      padding: 0.3rem 0.85rem;
+      border-radius: 99px;
+      font-size: 0.72rem;
+      font-weight: 700;
       text-transform: uppercase;
-      margin-bottom: 1.25rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.8rem;
     }
 
-    .pulse-dot {
-      width: 8px;
-      height: 8px;
+    .status-dot {
+      width: 7px;
+      height: 7px;
       background: #10b981;
       border-radius: 50%;
-      box-shadow: 0 0 12px #10b981;
-      animation: pulse 2s infinite;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulse 1.8s infinite;
     }
 
     @keyframes pulse {
       0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-      70% { box-shadow: 0 0 0 9px rgba(16, 185, 129, 0); }
+      70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
       100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
     }
 
     h1 {
-      font-size: clamp(2.5rem, 6vw, 4.2rem);
+      font-size: clamp(2.2rem, 4.5vw, 3.4rem);
       font-weight: 800;
       letter-spacing: -0.03em;
       line-height: 1.1;
-      margin-bottom: 0.75rem;
-      background: linear-gradient(135deg, #ffffff 35%, #38bdf8 75%, #818cf8 100%);
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #fff 40%, var(--primary) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    .typewriter-box {
+    .type-line {
       font-family: 'JetBrains Mono', monospace;
-      font-size: clamp(1rem, 2.5vw, 1.35rem);
       color: var(--primary);
-      font-weight: 500;
-      margin-bottom: 1.25rem;
-      min-height: 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      min-height: 1.6rem;
     }
 
-    .cursor {
-      display: inline-block;
-      width: 2px;
-      background-color: var(--primary);
-      animation: blink 0.8s infinite;
+    .hero-bio {
+      color: var(--muted);
+      font-size: 0.94rem;
+      margin-bottom: 1.6rem;
+      max-width: 600px;
     }
 
-    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-    .bio {
-      max-width: 680px;
-      color: var(--text-muted);
-      font-size: 1.02rem;
-      margin-bottom: 2rem;
-    }
-
-    .hero-btns {
+    .btn-group {
       display: flex;
-      gap: 0.9rem;
       flex-wrap: wrap;
-      justify-content: center;
-      margin-bottom: 3.5rem;
+      gap: 0.75rem;
+      margin-bottom: 1.8rem;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.55rem;
-      padding: 0.75rem 1.4rem;
-      border-radius: 12px;
-      font-size: 0.9rem;
+      gap: 0.5rem;
+      padding: 0.68rem 1.25rem;
+      border-radius: 11px;
+      font-size: 0.85rem;
       font-weight: 600;
       text-decoration: none;
-      transition: all 0.25s ease;
       cursor: pointer;
       border: none;
-    }
-
-    .btn-glow {
-      background: linear-gradient(135deg, #0284c7, #2563eb);
-      color: #fff;
-      box-shadow: 0 4px 25px var(--primary-glow);
-    }
-
-    .btn-glow:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(56, 189, 248, 0.55);
-    }
-
-    .btn-glass {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      color: var(--text);
-      backdrop-filter: blur(12px);
-    }
-
-    .btn-glass:hover {
-      border-color: var(--primary);
-      background: rgba(56, 189, 248, 0.08);
-      transform: translateY(-3px);
-    }
-
-    /* Live BI KPI Strip */
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-      gap: 1.2rem;
-      width: 100%;
-    }
-
-    .kpi-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 1.35rem;
-      backdrop-filter: blur(16px);
-      text-align: left;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .kpi-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 4px;
-      height: 100%;
-      background: var(--primary);
-    }
-
-    .kpi-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: var(--text-muted);
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.4rem;
-    }
-
-    .kpi-top i { color: var(--primary); font-size: 1.1rem; }
-
-    .kpi-num {
-      font-size: 2rem;
-      font-weight: 800;
-      color: #fff;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .kpi-sub {
-      font-size: 0.75rem;
-      color: #34d399;
-      margin-top: 0.2rem;
-    }
-
-    /* Sections */
-    section { padding: 4.5rem 0; }
-
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 2.25rem;
-    }
-
-    .section-title {
-      font-size: 1.85rem;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .section-title i { color: var(--primary); }
-
-    /* Interactive Filter Tabs (Slicers) */
-    .filter-tabs {
-      display: flex;
-      gap: 0.5rem;
-      background: rgba(15, 23, 42, 0.8);
-      padding: 0.35rem;
-      border-radius: 12px;
-      border: 1px solid var(--card-border);
-      flex-wrap: wrap;
-    }
-
-    .filter-btn {
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
       transition: all 0.25s;
     }
 
-    .filter-btn.active, .filter-btn:hover {
+    .btn-primary {
       background: var(--primary);
-      color: #030712;
-      box-shadow: 0 0 15px var(--primary-glow);
+      color: #020611;
+      box-shadow: 0 0 25px rgba(var(--primary-rgb), 0.4);
+    }
+    .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
+
+    .btn-glass {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .btn-glass:hover {
+      border-color: var(--primary);
+      background: rgba(var(--primary-rgb), 0.1);
+      transform: translateY(-2px);
     }
 
-    /* Projects Grid */
+    /* Mini KPI Row inside Hero */
+    .mini-kpis {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.75rem;
+      border-top: 1px solid var(--border);
+      padding-top: 1.25rem;
+    }
+
+    .m-kpi h4 {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.45rem;
+      color: #fff;
+    }
+    .m-kpi p {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* Right Side Live BI Chart Simulator */
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .chart-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .chart-slicers {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .slicer-btn {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-family: 'JetBrains Mono', monospace;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .slicer-btn.active {
+      background: var(--primary);
+      color: #020611;
+      font-weight: 700;
+      border-color: var(--primary);
+    }
+
+    /* Section Header & Filter Bar */
+    .sec-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 3.5rem 0 1.75rem;
+    }
+
+    .sec-title {
+      font-size: 1.65rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    .sec-title i { color: var(--primary); }
+
+    .filter-pills {
+      display: flex;
+      gap: 0.45rem;
+      background: rgba(13, 20, 36, 0.9);
+      padding: 0.35rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .f-pill {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      padding: 0.45rem 0.95rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+
+    .f-pill.active, .f-pill:hover {
+      background: var(--primary);
+      color: #020611;
+    }
+
+    /* 8 Projects Grid */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 1.5rem;
+      gap: 1.35rem;
     }
 
-    .project-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
+    .p-card {
+      background: var(--card);
+      border: 1px solid var(--border);
       border-radius: 18px;
-      padding: 1.65rem;
+      padding: 1.6rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       backdrop-filter: blur(14px);
-      transition: border-color 0.3s, box-shadow 0.3s;
+      transition: all 0.3s;
       transform-style: preserve-3d;
     }
 
-    .project-card:hover {
-      border-color: rgba(56, 189, 248, 0.5);
-      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+    .p-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 20px 40px -15px rgba(0,0,0,0.8);
     }
 
-    .card-top-bar {
+    .p-top {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 0.85rem;
+      margin-bottom: 0.8rem;
     }
 
-    .badge-cat {
-      font-size: 0.72rem;
+    .p-badge {
+      font-size: 0.7rem;
       font-weight: 700;
       text-transform: uppercase;
       padding: 0.25rem 0.65rem;
       border-radius: 6px;
       letter-spacing: 0.04em;
     }
+    .b-sql { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
+    .b-pbi { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+    .b-xl  { background: rgba(16, 185, 129, 0.15); color: #34d399; }
 
-    .cat-sql { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
-    .cat-pbi { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-    .cat-excel { background: rgba(16, 185, 129, 0.15); color: #34d399; }
-
-    .project-title {
-      font-size: 1.22rem;
+    .p-title {
+      font-size: 1.18rem;
       font-weight: 700;
-      margin-bottom: 0.55rem;
       color: #fff;
+      margin-bottom: 0.5rem;
     }
 
-    .project-desc {
-      color: var(--text-muted);
-      font-size: 0.88rem;
+    .p-desc {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .p-metric {
+      background: rgba(255,255,255,0.03);
+      border-left: 3px solid var(--primary);
+      padding: 0.5rem 0.75rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.76rem;
+      color: #e2e8f0;
+      border-radius: 0 8px 8px 0;
       margin-bottom: 1.1rem;
     }
 
-    .impact-box {
-      background: rgba(255, 255, 255, 0.03);
-      border-left: 3px solid var(--accent);
-      padding: 0.55rem 0.8rem;
-      border-radius: 0 8px 8px 0;
-      font-size: 0.8rem;
-      color: #e2e8f0;
-      margin-bottom: 1.2rem;
-      font-family: 'JetBrains Mono', monospace;
-    }
-
-    .project-tags {
+    .p-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-bottom: 1.35rem;
+      gap: 0.35rem;
+      margin-bottom: 1.25rem;
     }
 
     .tag {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      padding: 0.22rem 0.55rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 0.2rem 0.55rem;
       border-radius: 6px;
-      font-size: 0.73rem;
+      font-size: 0.72rem;
       color: #cbd5e1;
     }
 
-    .card-actions {
+    .p-actions {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.65rem;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 0.6rem;
     }
 
-    .btn-sm {
-      padding: 0.55rem 0.8rem;
-      font-size: 0.8rem;
-      border-radius: 9px;
-      justify-content: center;
-    }
-
-    .btn-code {
-      background: rgba(56, 189, 248, 0.12);
-      border: 1px solid rgba(56, 189, 248, 0.3);
+    .btn-run {
+      background: rgba(var(--primary-rgb), 0.14);
+      border: 1px solid rgba(var(--primary-rgb), 0.35);
       color: var(--primary);
+      justify-content: center;
+      padding: 0.55rem;
+      font-size: 0.78rem;
     }
-
-    .btn-code:hover {
+    .btn-run:hover {
       background: var(--primary);
-      color: #030712;
+      color: #020611;
     }
 
-    /* Skills Matrix */
-    .skills-grid {
+    /* Analytics Radar & Awards Bento Section */
+    .analytics-bento {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 1.35rem;
     }
 
-    .skill-box {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 18px;
-      padding: 1.65rem;
+    .timeline-item {
+      display: flex;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
     }
+    .timeline-item:last-child { border-bottom: none; }
 
-    .skill-box h3 {
+    .t-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(var(--primary-rgb), 0.12);
+      color: var(--primary);
       display: flex;
       align-items: center;
-      gap: 0.7rem;
-      font-size: 1.15rem;
-      margin-bottom: 1.1rem;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1rem;
     }
 
-    .bar-item { margin-bottom: 0.9rem; }
-    .bar-top {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.82rem;
-      margin-bottom: 0.3rem;
-      color: #cbd5e1;
-    }
-    .bar-track {
-      width: 100%;
-      height: 7px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 99px;
-      overflow: hidden;
-    }
-    .bar-fill {
-      height: 100%;
-      border-radius: 99px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-    }
+    .t-info h4 { font-size: 0.95rem; color: #fff; margin-bottom: 0.15rem; }
+    .t-info span { font-size: 0.75rem; color: var(--primary); font-family: 'JetBrains Mono', monospace; }
+    .t-info p { font-size: 0.82rem; color: var(--muted); margin-top: 0.25rem; }
 
-    /* Interactive Code Modal */
-    .modal-overlay {
+    /* Live SQL / DAX Execution Modal with Output Table */
+    .modal-bg {
       position: fixed;
       inset: 0;
-      background: rgba(3, 7, 18, 0.85);
-      backdrop-filter: blur(10px);
+      background: rgba(2, 6, 17, 0.88);
+      backdrop-filter: blur(12px);
       display: none;
       justify-content: center;
       align-items: center;
       z-index: 999;
-      padding: 1.5rem;
+      padding: 1rem;
     }
+    .modal-bg.open { display: flex; }
 
-    .modal-overlay.open { display: flex; }
-
-    .modal-window {
-      background: #0f172a;
-      border: 1px solid rgba(56, 189, 248, 0.35);
-      border-radius: 16px;
-      max-width: 720px;
+    .modal-box {
+      background: #0b1120;
+      border: 1px solid var(--primary);
+      border-radius: 18px;
+      max-width: 780px;
       width: 100%;
       overflow: hidden;
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
-      animation: zoomIn 0.25s ease;
+      box-shadow: 0 25px 70px rgba(0,0,0,0.9);
+      animation: pop 0.25s ease;
     }
 
-    @keyframes zoomIn {
-      from { transform: scale(0.92); opacity: 0; }
+    @keyframes pop {
+      from { transform: scale(0.93); opacity: 0; }
       to { transform: scale(1); opacity: 1; }
     }
 
-    .modal-header {
-      background: #1e293b;
-      padding: 0.9rem 1.25rem;
+    .m-head {
+      background: #131c31;
+      padding: 0.85rem 1.25rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid var(--border);
     }
 
-    .window-dots { display: flex; gap: 0.45rem; }
-    .dot { width: 12px; height: 12px; border-radius: 50%; }
-    .dot-r { background: #ef4444; }
-    .dot-y { background: #f59e0b; }
-    .dot-g { background: #10b981; }
+    .m-dots { display: flex; gap: 0.4rem; }
+    .m-dots span { width: 11px; height: 11px; border-radius: 50%; }
 
-    .modal-title {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      color: #cbd5e1;
-    }
-
-    .close-modal {
-      background: none;
-      border: none;
-      color: var(--text-muted);
-      font-size: 1.2rem;
-      cursor: pointer;
-    }
-
-    .modal-body {
-      padding: 1.5rem;
-      max-height: 75vh;
+    .m-body {
+      padding: 1.35rem;
+      max-height: 80vh;
       overflow-y: auto;
     }
 
     pre {
-      background: #060b16;
-      padding: 1.15rem;
+      background: #050914;
+      padding: 1rem;
       border-radius: 10px;
-      border: 1px solid rgba(255,255,255,0.06);
-      overflow-x: auto;
+      border: 1px solid var(--border);
       font-family: 'JetBrains Mono', monospace;
-      font-size: 0.82rem;
-      color: #38bdf8;
-      line-height: 1.6;
+      font-size: 0.78rem;
+      color: var(--primary);
+      overflow-x: auto;
+      margin-bottom: 1rem;
+    }
+
+    .exec-status {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.74rem;
+      color: #34d399;
+      margin-bottom: 0.5rem;
+    }
+
+    .result-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      background: #050914;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .result-table th, .result-table td {
+      padding: 0.55rem 0.75rem;
+      border: 1px solid rgba(255,255,255,0.06);
+      text-align: left;
+    }
+
+    .result-table th {
+      background: rgba(var(--primary-rgb), 0.15);
+      color: var(--primary);
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #10b981;
+      color: #020611;
+      font-weight: 700;
+      padding: 0.75rem 1.25rem;
+      border-radius: 10px;
+      display: none;
+      z-index: 9999;
+      box-shadow: 0 10px 30px rgba(16,185,129,0.4);
     }
 
     footer {
-      border-top: 1px solid var(--card-border);
-      padding: 3rem 0;
       text-align: center;
-      color: var(--text-muted);
-      font-size: 0.88rem;
-      margin-top: 3rem;
+      padding: 3rem 0 1rem;
+      color: var(--muted);
+      font-size: 0.84rem;
+      border-top: 1px solid var(--border);
+      margin-top: 4rem;
     }
 
-    @media (max-width: 640px) {
-      nav { width: 92%; justify-content: space-around; padding: 0.6rem 0.8rem; gap: 0.5rem; }
+    @media (max-width: 920px) {
+      .bento-hero, .analytics-bento { grid-template-columns: 1fr; }
+      .mini-kpis { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <div class="bg-grid"></div>
-  <div id="spotlight"></div>
+  <!-- 1. Futuristic Sci-Fi Boot Screen -->
+  <div id="boot-screen">
+    <div class="boot-box">
+      <div class="boot-title">
+        <span>A_KISHOR_BI_OS v4.6</span>
+        <span id="boot-pct">0%</span>
+      </div>
+      <div class="boot-bar-bg">
+        <div class="boot-bar-fill" id="boot-fill"></div>
+      </div>
+      <div class="boot-logs" id="boot-logs">
+        > Initializing Relational SQL Engine...<br>
+      </div>
+    </div>
+  </div>
 
-  <!-- Floating Navbar -->
+  <!-- 2. Interactive Neural Constellation Canvas -->
+  <canvas id="neural-canvas"></canvas>
+
+  <!-- Floating OS Navbar with Live Theme Switcher -->
   <nav>
-    <a href="#" class="nav-logo"><i class="fa-solid fa-chart-pie"></i> A KISHOR<span>.BI</span></a>
-    <a href="#projects">Dashboards</a>
-    <a href="#skills">Toolkit</a>
-    <a href="https://github.com/akishor2563-radhe" target="_blank">GitHub</a>
+    <a href="#" class="brand"><i class="fa-solid fa-layer-group"></i> A KISHOR <span>BI.OS</span></a>
+    <div class="nav-links">
+      <a href="#projects">Projects (8)</a>
+      <a href="#analytics">Competency Radar</a>
+      <a href="https://github.com/akishor2563-radhe" target="_blank">GitHub</a>
+    </div>
+    <div class="theme-dots" title="Switch Live Theme">
+      <div class="t-dot" style="background:#38bdf8;" onclick="setTheme('#38bdf8','56, 189, 248')"></div>
+      <div class="t-dot" style="background:#10b981;" onclick="setTheme('#10b981','16, 185, 129')"></div>
+      <div class="t-dot" style="background:#f59e0b;" onclick="setTheme('#f59e0b','245, 158, 11')"></div>
+    </div>
   </nav>
 
   <div class="container">
-    <!-- Hero Section -->
-    <header data-aos="fade-up">
-      <img src="profile.jpg" alt="A Kishor" class="profile-img" onerror="this.style.display='none'">
-      
-      <div class="hud-badge">
-        <span class="pulse-dot"></span>
-        System Online · Open to Data Analyst Roles
+    <!-- Bento Hero Section -->
+    <div class="bento-hero">
+      <!-- Left: Executive Intro Card -->
+      <div class="bento-card" data-tilt>
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          System Online · Ready for Data Analyst Roles
+        </div>
+
+        <div class="profile-row">
+          <img src="profile.jpg" alt="A Kishor" class="profile-img" onerror="this.style.display='none'">
+          <div>
+            <h1>A Kishor</h1>
+            <div class="type-line" id="typewriter"></div>
+          </div>
+        </div>
+
+        <p class="hero-bio">
+          Architecting end-to-end Business Intelligence solutions across <strong>MySQL</strong> (Window Functions, CTEs), <strong>Power BI</strong> (Star Schema, Advanced DAX), and <strong>Excel 365</strong> (Power Query, Power Pivot) to turn raw data into executive strategy.
+        </p>
+
+        <div class="btn-group">
+          <a href="resume.pdf" target="_blank" class="btn btn-primary">
+            <i class="fa-solid fa-file-arrow-down"></i> Download CV
+          </a>
+          <a href="https://www.linkedin.com/in/akishor020501" target="_blank" class="btn btn-glass">
+            <i class="fa-brands fa-linkedin"></i> LinkedIn
+          </a>
+          <a href="https://github.com/akishor2563-radhe?tab=repositories" target="_blank" class="btn btn-glass">
+            <i class="fa-brands fa-github"></i> GitHub (8 Repos)
+          </a>
+          <button class="btn btn-glass" onclick="copyEmail()">
+            <i class="fa-regular fa-copy"></i> Copy Email
+          </button>
+        </div>
+
+        <div class="mini-kpis">
+          <div class="m-kpi">
+            <h4>8+</h4>
+            <p>Live Projects</p>
+          </div>
+          <div class="m-kpi">
+            <h4>15K+</h4>
+            <p>Rows Cleaned</p>
+          </div>
+          <div class="m-kpi">
+            <h4>60+</h4>
+            <p>SQL & DAX</p>
+          </div>
+          <div class="m-kpi">
+            <h4>$2.25M</h4>
+            <p>Sales Modeled</p>
+          </div>
+        </div>
       </div>
 
-      <h1>A Kishor</h1>
-
-      <div class="typewriter-box">
-        <span id="typewriter"></span><span class="cursor">&nbsp;</span>
-      </div>
-
-      <p class="bio">
-        Transforming raw multi-table datasets into executive decision systems using <strong>SQL</strong>, <strong>Power BI (DAX & Star Schema)</strong>, and <strong>Advanced Excel</strong>.
-      </p>
-
-      <div class="hero-btns">
-        <a href="resume.pdf" target="_blank" class="btn btn-glow">
-          <i class="fa-solid fa-file-arrow-down"></i> Download CV
-        </a>
-        <a href="https://www.linkedin.com/in/akishor020501" target="_blank" class="btn btn-glass">
-          <i class="fa-brands fa-linkedin"></i> LinkedIn
-        </a>
-        <a href="https://github.com/akishor2563-radhe?tab=repositories" target="_blank" class="btn btn-glass">
-          <i class="fa-brands fa-github"></i> GitHub Profile
-        </a>
-      </div>
-
-      <!-- Live Animated BI KPI Strip -->
-      <div class="kpi-grid">
-        <div class="kpi-card" data-tilt>
-          <div class="kpi-top"><span>Portfolio Projects</span><i class="fa-solid fa-cubes"></i></div>
-          <div class="kpi-num"><span class="counter" data-target="8">0</span>+</div>
-          <div class="kpi-sub">▲ SQL, Power BI & Excel</div>
+      <!-- Right: Live Interactive Power BI Chart Simulator -->
+      <div class="bento-card">
+        <div class="chart-header">
+          <div class="chart-title">
+            <i class="fa-solid fa-chart-Simple"></i> Live BI Telemetry Simulator
+          </div>
+          <div class="chart-slicers">
+            <button class="slicer-btn active" onclick="updateChart('pbi', this)">Power BI</button>
+            <button class="slicer-btn" onclick="updateChart('sql', this)">SQL</button>
+            <button class="slicer-btn" onclick="updateChart('xl', this)">Excel</button>
+          </div>
         </div>
-        <div class="kpi-card" data-tilt>
-          <div class="kpi-top"><span>Records Processed</span><i class="fa-solid fa-database"></i></div>
-          <div class="kpi-num"><span class="counter" data-target="15000">0</span>+</div>
-          <div class="kpi-sub">▲ Cleaned via Power Query & SQL</div>
-        </div>
-        <div class="kpi-card" data-tilt>
-          <div class="kpi-top"><span>DAX & SQL Queries</span><i class="fa-solid fa-terminal"></i></div>
-          <div class="kpi-num"><span class="counter" data-target="60">0</span>+</div>
-          <div class="kpi-sub">▲ CTEs, Joins & Time Intelligence</div>
-        </div>
-        <div class="kpi-card" data-tilt>
-          <div class="kpi-top"><span>Dashboard Views</span><i class="fa-solid fa-chart-line"></i></div>
-          <div class="kpi-num"><span class="counter" data-target="18">0</span>+</div>
-          <div class="kpi-sub">▲ Interactive Executive Reports</div>
+        <p style="font-size:0.76rem; color:var(--muted); margin-bottom:0.8rem;">
+          Click slicer buttons above to dynamically filter modeled revenue & record volume across portfolio domains:
+        </p>
+        <div style="height: 235px;">
+          <canvas id="liveBiChart"></canvas>
         </div>
       </div>
-    </header>
+    </div>
 
-    <!-- Interactive Projects Section -->
-    <section id="projects">
-      <div class="section-header" data-aos="fade-up">
-        <h2 class="section-title"><i class="fa-solid fa-bolt"></i> Interactive Analytics Command Center</h2>
-        
-        <!-- Slicer Filter Buttons -->
-        <div class="filter-tabs">
-          <button class="filter-btn active" onclick="filterProjects('all', this)">All (8)</button>
-          <button class="filter-btn" onclick="filterProjects('pbi', this)">Power BI (5)</button>
-          <button class="filter-btn" onclick="filterProjects('sql', this)">SQL (1)</button>
-          <button class="filter-btn" onclick="filterProjects('excel', this)">Excel (2)</button>
+    <!-- Interactive Projects Command Center -->
+    <div id="projects">
+      <div class="sec-head">
+        <h2 class="sec-title"><i class="fa-solid fa-bolt"></i> Interactive Analytics Portfolio</h2>
+        <div class="filter-pills">
+          <button class="f-pill active" onclick="filterCards('all', this)">All Projects (8)</button>
+          <button class="f-pill" onclick="filterCards('pbi', this)">Power BI (5)</button>
+          <button class="f-pill" onclick="filterCards('sql', this)">MySQL (1)</button>
+          <button class="f-pill" onclick="filterCards('xl', this)">Excel 365 (2)</button>
         </div>
       </div>
 
       <div class="projects-grid">
-
-        <!-- 1. SQL Project -->
-        <div class="project-card" data-category="sql" data-tilt>
+        <!-- 1. SQL Retail Analytics -->
+        <div class="p-card" data-cat="sql" data-tilt>
           <div>
-            <div class="card-top-bar">
-              <span class="badge-cat cat-sql">MySQL Database</span>
+            <div class="p-top">
+              <span class="p-badge b-sql">MySQL RDBMS</span>
               <i class="fa-solid fa-database" style="color:#38bdf8;"></i>
             </div>
-            <h3 class="project-title">Retail & E-Commerce Sales Analytics</h3>
-            <p class="project-desc">Normalized relational schema across Customers, Products, and Orders to solve 20+ complex business KPI scenarios.</p>
-            <div class="impact-box">⚡ Window Functions · CTEs · Multi-Table Joins</div>
+            <h3 class="p-title">Retail & E-Commerce Sales Analytics</h3>
+            <p class="p-desc">Normalized 3-table schema (Customers, Products, Orders) solving 20+ business scenarios using Window Functions & CTEs.</p>
+            <div class="p-metric">⚡ DENSE_RANK() · LAG() · Multi-Table Joins</div>
           </div>
           <div>
-            <div class="project-tags">
+            <div class="p-tags">
               <span class="tag">MySQL</span>
-              <span class="tag">ROW_NUMBER / DENSE_RANK</span>
-              <span class="tag">LAG & LEAD</span>
+              <span class="tag">Window Functions</span>
               <span class="tag">CTEs</span>
+              <span class="tag">KPI Queries</span>
             </div>
-            <div class="card-actions">
-              <button class="btn btn-sm btn-code" onclick="openLogic('sql1')">
-                <i class="fa-solid fa-code"></i> Inspect SQL
+            <div class="p-actions">
+              <button class="btn btn-run" onclick="runQuery('sql1')">
+                <i class="fa-solid fa-play"></i> Run SQL Query
               </button>
-              <a href="https://github.com/akishor2563-radhe/SQL-Retail-Sales-Analytics" target="_blank" class="btn btn-sm btn-glass">
+              <a href="https://github.com/akishor2563-radhe/SQL-Retail-Sales-Analytics" target="_blank" class="btn btn-glass" style="justify-content:center; padding:0.55rem; font-size:0.78rem;">
                 <i class="fa-brands fa-github"></i> Repo ↗
               </a>
             </div>
@@ -714,28 +832,28 @@
         </div>
 
         <!-- 2. Power BI Mobile Sales -->
-        <div class="project-card" data-category="pbi" data-tilt>
+        <div class="p-card" data-cat="pbi" data-tilt>
           <div>
-            <div class="card-top-bar">
-              <span class="badge-cat cat-pbi">Power BI</span>
-              <i class="fa-solid fa-mobile-screen-button" style="color:#fbbf24;"></i>
+            <div class="p-top">
+              <span class="p-badge b-pbi">Power BI</span>
+              <i class="fa-solid fa-mobile-screen" style="color:#fbbf24;"></i>
             </div>
-            <h3 class="project-title">Mobile Phone Sales Analytics</h3>
-            <p class="project-desc">Two-page interactive executive dashboard tracking mobile brand performance, MoM% growth, and payment channels.</p>
-            <div class="impact-box">📊 Executive Overview + Deep-Dive Drillthrough</div>
+            <h3 class="p-title">Mobile Phone Sales Analytics</h3>
+            <p class="p-desc">2-page interactive dashboard (Executive Overview & Brand Deep-Dive) tracking mobile sales, MoM% growth, and UPI/Card channels.</p>
+            <div class="p-metric">📊 SUMX · CALCULATE · PREVIOUSMONTH</div>
           </div>
           <div>
-            <div class="project-tags">
+            <div class="p-tags">
               <span class="tag">Power BI</span>
               <span class="tag">DAX Measures</span>
               <span class="tag">Power Query</span>
               <span class="tag">Tooltips</span>
             </div>
-            <div class="card-actions">
-              <button class="btn btn-sm btn-code" onclick="openLogic('pbi1')">
-                <i class="fa-solid fa-calculator"></i> Inspect DAX
+            <div class="p-actions">
+              <button class="btn btn-run" onclick="runQuery('pbi1')">
+                <i class="fa-solid fa-play"></i> Run DAX Logic
               </button>
-              <a href="https://github.com/akishor2563-radhe/Mobile-Phone-Sales-Analysis-PowerBI" target="_blank" class="btn btn-sm btn-glass">
+              <a href="https://github.com/akishor2563-radhe/Mobile-Phone-Sales-Analysis-PowerBI" target="_blank" class="btn btn-glass" style="justify-content:center; padding:0.55rem; font-size:0.78rem;">
                 <i class="fa-brands fa-github"></i> Repo ↗
               </a>
             </div>
@@ -743,27 +861,27 @@
         </div>
 
         <!-- 3. Power BI ElectroGlobal -->
-        <div class="project-card" data-category="pbi" data-tilt>
+        <div class="p-card" data-cat="pbi" data-tilt>
           <div>
-            <div class="card-top-bar">
-              <span class="badge-cat cat-pbi">Power BI</span>
-              <i class="fa-solid fa-globe" style="color:#fbbf24;"></i>
+            <div class="p-top">
+              <span class="p-badge b-pbi">Power BI</span>
+              <i class="fa-solid fa-diagram-project" style="color:#fbbf24;"></i>
             </div>
-            <h3 class="project-title">ElectroGlobal Executive Dashboard</h3>
-            <p class="project-desc">Enterprise BI solution featuring multi-table Star Schema data modeling and dynamic time-intelligence DAX calculations.</p>
-            <div class="impact-box">🌟 1-to-Many Star Schema Architecture</div>
+            <h3 class="p-title">ElectroGlobal Executive Dashboard</h3>
+            <p class="p-desc">Enterprise BI solution for ElectroGlobal Inc. featuring 1-to-Many Star Schema modeling and dynamic time-intelligence KPIs.</p>
+            <div class="p-metric">🌟 Star Schema · TOTALYTD · ALL()</div>
           </div>
           <div>
-            <div class="project-tags">
+            <div class="p-tags">
               <span class="tag">Star Schema</span>
-              <span class="tag">CALCULATE / SUMX</span>
-              <span class="tag">Time Intelligence</span>
+              <span class="tag">Complex DAX</span>
+              <span class="tag">Data Modeling</span>
             </div>
-            <div class="card-actions">
-              <button class="btn btn-sm btn-code" onclick="openLogic('pbi2')">
-                <i class="fa-solid fa-calculator"></i> Inspect DAX
+            <div class="p-actions">
+              <button class="btn btn-run" onclick="runQuery('pbi2')">
+                <i class="fa-solid fa-play"></i> Run DAX Logic
               </button>
-              <a href="https://github.com/akishor2563-radhe/ElectroGlobal-Executive-Dashboard-PowerBI" target="_blank" class="btn btn-sm btn-glass">
+              <a href="https://github.com/akishor2563-radhe/ElectroGlobal-Executive-Dashboard-PowerBI" target="_blank" class="btn btn-glass" style="justify-content:center; padding:0.55rem; font-size:0.78rem;">
                 <i class="fa-brands fa-github"></i> Repo ↗
               </a>
             </div>
@@ -771,28 +889,28 @@
         </div>
 
         <!-- 4. Excel SuperStore Capstone -->
-        <div class="project-card" data-category="excel" data-tilt>
+        <div class="p-card" data-cat="xl" data-tilt>
           <div>
-            <div class="card-top-bar">
-              <span class="badge-cat cat-excel">Excel Capstone</span>
+            <div class="p-top">
+              <span class="p-badge b-xl">Excel Capstone</span>
               <i class="fa-solid fa-file-excel" style="color:#34d399;"></i>
             </div>
-            <h3 class="project-title">SuperStore Sales Analytics ($2.25M)</h3>
-            <p class="project-desc">Multi-view retail analytics system analyzing 9,800+ transactions across Regional, Product, and Customer segments.</p>
-            <div class="impact-box">💰 West & East Hubs = 61% Total Revenue</div>
+            <h3 class="p-title">SuperStore Sales Analytics ($2.25M)</h3>
+            <p class="p-desc">End-to-end Excel reporting system evaluating 9,800+ orders across 4 interactive dashboard tabs with Power Pivot & DAX.</p>
+            <div class="p-metric">💰 $2.25M Revenue · 9+ Custom Measures</div>
           </div>
           <div>
-            <div class="project-tags">
+            <div class="p-tags">
               <span class="tag">Excel 365</span>
               <span class="tag">Power Pivot</span>
               <span class="tag">Power Query</span>
-              <span class="tag">9+ DAX Measures</span>
+              <span class="tag">Slicers</span>
             </div>
-            <div class="card-actions">
-              <button class="btn btn-sm btn-code" onclick="openLogic('excel1')">
-                <i class="fa-solid fa-code"></i> Inspect Model
+            <div class="p-actions">
+              <button class="btn btn-run" onclick="runQuery('xl1')">
+                <i class="fa-solid fa-play"></i> Run Formula
               </button>
-              <a href="https://github.com/akishor2563-radhe/Capstone-SuperStore-Sales-Analytics-Excel" target="_blank" class="btn btn-sm btn-glass">
+              <a href="https://github.com/akishor2563-radhe/Capstone-SuperStore-Sales-Analytics-Excel" target="_blank" class="btn btn-glass" style="justify-content:center; padding:0.55rem; font-size:0.78rem;">
                 <i class="fa-brands fa-github"></i> Repo ↗
               </a>
             </div>
@@ -800,27 +918,27 @@
         </div>
 
         <!-- 5. Power BI Global Sales Regional -->
-        <div class="project-card" data-category="pbi" data-tilt>
+        <div class="p-card" data-cat="pbi" data-tilt>
           <div>
-            <div class="card-top-bar">
-              <span class="badge-cat cat-pbi">Power BI</span>
-              <i class="fa-solid fa-map-location-dot" style="color:#fbbf24;"></i>
+            <div class="p-top">
+              <span class="p-badge b-pbi">Power BI</span>
+              <i class="fa-solid fa-earth-americas" style="color:#fbbf24;"></i>
             </div>
-            <h3 class="project-title">Global Sales & Regional Analytics</h3>
-            <p class="project-desc">Territory revenue breakdown and regional profitability tracker built over a multi-table relational dataset.</p>
-            <div class="impact-box">🌍 Cross-Continent Revenue & Margin Tracking</div>
+            <h3 class="p-title">Global Sales & Regional Analytics</h3>
+            <p class="p-desc">Multi-table relational dataset dashboard analyzing territory revenue contribution, profit margins, and regional growth.</p>
+            <div class="p-metric">🌍 Regional Drill-Downs & Margin KPIs</div>
           </div>
           <div>
-            <div class="project-tags">
+            <div class="p-tags">
               <span class="tag">Power BI</span>
-              <span class="tag">Geo-Mapping</span>
-              <span class="tag">Relational Model</span>
+              <span class="tag">Geo Analytics</span>
+              <span class="tag">DAX</span>
             </div>
-            <div class="card-actions">
-              <button class="btn btn-sm btn-code" onclick="openLogic('pbi3')">
-                <i class="fa-solid fa-calculator"></i> Inspect DAX
+            <div class="p-actions">
+              <button class="btn btn-run" onclick="runQuery('pbi2')">
+                <i class="fa-solid fa-play"></i> Run DAX Logic
               </button>
-              <a href="https://github.com/akishor2563-radhe/Global-Sales-Regional-Analytics-PowerBI" target="_blank" class="btn btn-sm btn-glass">
+              <a href="https://github.com/akishor2563-radhe/Global-Sales-Regional-Analytics-PowerBI" target="_blank" class="btn btn-glass" style="justify-content:center; padding:0.55rem; font-size:0.78rem;">
                 <i class="fa-brands fa-github"></i> Repo ↗
               </a>
             </div>
@@ -828,27 +946,27 @@
         </div>
 
         <!-- 6. Power BI Executive Sales -->
-        <div class="project-card" data-category="pbi" data-tilt>
+        <div class="p-card" data-cat="pbi" data-tilt>
           <div>
-            <div class="card-top-bar">
-              <span class="badge-cat cat-pbi">Power BI</span>
-              <i class="fa-solid fa-chart-column" style="color:#fbbf24;"></i>
+            <div class="p-top">
+              <span class="p-badge b-pbi">Power BI</span>
+              <i class="fa-solid fa-chart-pie" style="color:#fbbf24;"></i>
             </div>
-            <h3 class="project-title">Executive Sales & Order Performance</h3>
-            <p class="project-desc">Order fulfillment, revenue velocity, and top customer contribution report designed for C-suite decision makers.</p>
-            <div class="impact-box">📈 Dynamic KPI Cards & Slicer Sync</div>
+            <h3 class="p-title">Executive Sales & Order Performance</h3>
+            <p class="p-desc">Executive order fulfillment and sales velocity tracking system featuring interactive KPI cards and cross-filtering.</p>
+            <div class="p-metric">📈 Order Velocity & Top Customer Tiers</div>
           </div>
           <div>
-            <div class="project-tags">
+            <div class="p-tags">
               <span class="tag">Power BI</span>
-              <span class="tag">Order KPIs</span>
-              <span class="tag">Interactive Visuals</span>
+              <span class="tag">Executive KPIs</span>
+              <span class="tag">Visual Sync</span>
             </div>
-            <div class="card-actions">
-              <button class="btn btn-sm btn-code" onclick="openLogic('pbi1')">
-                <i class="fa-solid fa-calculator"></i> Inspect DAX
+            <div class="p-actions">
+              <button class="btn btn-run" onclick="runQuery('pbi1')">
+                <i class="fa-solid fa-play"></i> Run DAX Logic
               </button>
-              <a href="https://github.com/akishor2563-radhe/Executive-Sales-Dashboard-PowerBI" target="_blank" class="btn btn-sm btn-glass">
+              <a href="https://github.com/akishor2563-radhe/Executive-Sales-Dashboard-PowerBI" target="_blank" class="btn btn-glass" style="justify-content:center; padding:0.55rem; font-size:0.78rem;">
                 <i class="fa-brands fa-github"></i> Repo ↗
               </a>
             </div>
@@ -856,27 +974,27 @@
         </div>
 
         <!-- 7. Power BI Sales Practice -->
-        <div class="project-card" data-category="pbi" data-tilt>
+        <div class="p-card" data-cat="pbi" data-tilt>
           <div>
-            <div class="card-top-bar">
-              <span class="badge-cat cat-pbi">Power BI</span>
-              <i class="fa-solid fa-Sliders" style="color:#fbbf24;"></i>
+            <div class="p-top">
+              <span class="p-badge b-pbi">Power BI</span>
+              <i class="fa-solid fa-sliders" style="color:#fbbf24;"></i>
             </div>
-            <h3 class="project-title">Sales Practice Analysis Dashboard</h3>
-            <p class="project-desc">Analytical model implementing calculated columns, granular DAX measures, and drill-down visual hierarchies.</p>
-            <div class="impact-box">🔍 Granular Category & Segment Drill-Downs</div>
+            <h3 class="p-title">Sales Practice Analysis Dashboard</h3>
+            <p class="p-desc">Analytical report utilizing calculated columns, DAX measures, and category hierarchy filters for retail performance.</p>
+            <div class="p-metric">🔍 Calculated Columns & Hierarchy Slicers</div>
           </div>
           <div>
-            <div class="project-tags">
+            <div class="p-tags">
               <span class="tag">Power BI</span>
               <span class="tag">Calculated Columns</span>
               <span class="tag">DAX</span>
             </div>
-            <div class="card-actions">
-              <button class="btn btn-sm btn-code" onclick="openLogic('pbi2')">
-                <i class="fa-solid fa-calculator"></i> Inspect DAX
+            <div class="p-actions">
+              <button class="btn btn-run" onclick="runQuery('pbi1')">
+                <i class="fa-solid fa-play"></i> Run DAX Logic
               </button>
-              <a href="https://github.com/akishor2563-radhe/Sales-Practice-Dashboard-PowerBI-" target="_blank" class="btn btn-sm btn-glass">
+              <a href="https://github.com/akishor2563-radhe/Sales-Practice-Dashboard-PowerBI-" target="_blank" class="btn btn-glass" style="justify-content:center; padding:0.55rem; font-size:0.78rem;">
                 <i class="fa-brands fa-github"></i> Repo ↗
               </a>
             </div>
@@ -884,304 +1002,436 @@
         </div>
 
         <!-- 8. Excel Data Analytics Projects -->
-        <div class="project-card" data-category="excel" data-tilt>
+        <div class="p-card" data-cat="xl" data-tilt>
           <div>
-            <div class="card-top-bar">
-              <span class="badge-cat cat-excel">Excel Suite</span>
-              <i class="fa-solid fa-table" style="color:#34d399;"></i>
+            <div class="p-top">
+              <span class="p-badge b-xl">Excel 365</span>
+              <i class="fa-solid fa-table-cells" style="color:#34d399;"></i>
             </div>
-            <h3 class="project-title">Excel Data Analytics Projects</h3>
-            <p class="project-desc">Collection of automated Excel dashboards, multi-condition formula models, and data cleansing pipelines.</p>
-            <div class="impact-box">⚙️ XLOOKUP · INDEX/MATCH · Dynamic Arrays</div>
+            <h3 class="p-title">Excel Data Analytics Projects</h3>
+            <p class="p-desc">Suite of automated Excel dashboards, Hospital Emergency tracking, and multi-condition XLOOKUP/INDEX-MATCH pipelines.</p>
+            <div class="p-metric">⚙️ 300+ Formula Scenarios & Dashboards</div>
           </div>
           <div>
-            <div class="project-tags">
+            <div class="p-tags">
               <span class="tag">Excel 365</span>
+              <span class="tag">XLOOKUP</span>
               <span class="tag">Pivot Tables</span>
-              <span class="tag">Advanced Formulas</span>
             </div>
-            <div class="card-actions">
-              <button class="btn btn-sm btn-code" onclick="openLogic('excel1')">
-                <i class="fa-solid fa-code"></i> Inspect Formulas
+            <div class="p-actions">
+              <button class="btn btn-run" onclick="runQuery('xl1')">
+                <i class="fa-solid fa-play"></i> Run Formula
               </button>
-              <a href="https://github.com/akishor2563-radhe/Excel-Data-Analytics-Projects" target="_blank" class="btn btn-sm btn-glass">
+              <a href="https://github.com/akishor2563-radhe/Excel-Data-Analytics-Projects" target="_blank" class="btn btn-glass" style="justify-content:center; padding:0.55rem; font-size:0.78rem;">
                 <i class="fa-brands fa-github"></i> Repo ↗
               </a>
             </div>
           </div>
         </div>
-
       </div>
-    </section>
+    </div>
 
-    <!-- Technical Proficiency Matrix -->
-    <section id="skills" data-aos="fade-up">
-      <div class="section-header">
-        <h2 class="section-title"><i class="fa-solid fa-microchip"></i> Core Technical Architecture</h2>
+    <!-- Competency Radar & Recognition Bento Grid -->
+    <div id="analytics" class="sec-head">
+      <h2 class="sec-title"><i class="fa-solid fa-compass-drafting"></i> Skill Radar & Recognition</h2>
+    </div>
+
+    <div class="analytics-bento">
+      <!-- Live Radar Chart -->
+      <div class="bento-card">
+        <div class="chart-title" style="margin-bottom:0.8rem;">
+          <i class="fa-solid fa-radar"></i> Technical Competency Matrix
+        </div>
+        <div style="height: 280px; display:flex; justify-content:center;">
+          <canvas id="radarChart"></canvas>
+        </div>
       </div>
-      <div class="skills-grid">
-        <div class="skill-box" data-tilt>
-          <h3><i class="fa-solid fa-database" style="color:#38bdf8;"></i> SQL & Database Querying</h3>
-          <div class="bar-item">
-            <div class="bar-top"><span>Joins (INNER, LEFT, SELF) & Aggregations</span><span>95%</span></div>
-            <div class="bar-track"><div class="bar-fill" style="width:95%"></div></div>
-          </div>
-          <div class="bar-item">
-            <div class="bar-top"><span>Window Functions (ROW_NUMBER, RANK, LAG)</span><span>90%</span></div>
-            <div class="bar-track"><div class="bar-fill" style="width:90%"></div></div>
-          </div>
-          <div class="bar-item">
-            <div class="bar-top"><span>CTEs, Subqueries & Schema Design</span><span>88%</span></div>
-            <div class="bar-track"><div class="bar-fill" style="width:88%"></div></div>
+
+      <!-- Awards, Hackathon & Experience Timeline -->
+      <div class="bento-card">
+        <div class="chart-title" style="margin-bottom:0.8rem;">
+          <i class="fa-solid fa-trophy"></i> Awards, Training & Experience
+        </div>
+
+        <div class="timeline-item">
+          <div class="t-icon"><i class="fa-solid fa-award"></i></div>
+          <div class="t-info">
+            <h4>Best Performer Award — Data Analytics</h4>
+            <span>Webskitters Academy · Oct 2026</span>
+            <p>Recognized for excellence in SQL querying, Power BI Star Schema modeling, and capstone dashboard execution.</p>
           </div>
         </div>
 
-        <div class="skill-box" data-tilt>
-          <h3><i class="fa-solid fa-chart-simple" style="color:#fbbf24;"></i> Power BI & DAX Engineering</h3>
-          <div class="bar-item">
-            <div class="bar-top"><span>DAX (CALCULATE, SUMX, Time Intelligence)</span><span>92%</span></div>
-            <div class="bar-track"><div class="bar-fill" style="width:92%"></div></div>
-          </div>
-          <div class="bar-item">
-            <div class="bar-top"><span>Star Schema Modeling & Power Query ETL</span><span>94%</span></div>
-            <div class="bar-track"><div class="bar-fill" style="width:94%"></div></div>
-          </div>
-          <div class="bar-item">
-            <div class="bar-top"><span>Interactive Dashboards, KPIs & Tooltips</span><span>96%</span></div>
-            <div class="bar-track"><div class="bar-fill" style="width:96%"></div></div>
+        <div class="timeline-item">
+          <div class="t-icon"><i class="fa-solid fa-microchip"></i></div>
+          <div class="t-info">
+            <h4>Google Cloud Gen AI Academy APAC Hackathon</h4>
+            <span>Hack2skill · Cohort 2 (2026)</span>
+            <p>Participated in building AI-driven analytical workflows and data problem-solving prototypes.</p>
           </div>
         </div>
 
-        <div class="skill-box" data-tilt>
-          <h3><i class="fa-solid fa-file-excel" style="color:#34d399;"></i> Advanced Excel 365</h3>
-          <div class="bar-item">
-            <div class="bar-top"><span>XLOOKUP, INDEX/MATCH, SUMIFS, Dynamic Arrays</span><span>95%</span></div>
-            <div class="bar-track"><div class="bar-fill" style="width:95%"></div></div>
-          </div>
-          <div class="bar-item">
-            <div class="bar-top"><span>Pivot Tables, Power Pivot & Data Modeling</span><span>92%</span></div>
-            <div class="bar-track"><div class="bar-fill" style="width:92%"></div></div>
-          </div>
-          <div class="bar-item">
-            <div class="bar-top"><span>Data Cleaning & Executive Dashboarding</span><span>94%</span></div>
-            <div class="bar-track"><div class="bar-fill" style="width:94%"></div></div>
+        <div class="timeline-item">
+          <div class="t-icon"><i class="fa-solid fa-briefcase"></i></div>
+          <div class="t-info">
+            <h4>Customer Executive — Operations & KPI Reporting</h4>
+            <span>Concentrix · Concluded May 2026</span>
+            <p>Managed high-volume client operations, SLA metrics, and root-cause issue resolution in a fast-paced KPI environment.</p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
 
     <footer>
-      <p>Designed & Engineered by <strong>A Kishor</strong> · Interactive BI Portfolio</p>
-      <p style="margin-top:0.3rem; font-size:0.78rem;">akishor2563@gmail.com · Kolkata, India</p>
+      <p>Engineered by <strong>A Kishor</strong> · Interactive BI OS Portfolio</p>
+      <p style="margin-top:0.3rem; font-size:0.75rem;">GitHub Pages · SQL · Power BI · Excel 365</p>
     </footer>
   </div>
 
-  <!-- Interactive Code / Logic Modal -->
-  <div class="modal-overlay" id="logicModal" onclick="if(event.target===this) closeLogic()">
-    <div class="modal-window">
-      <div class="modal-header">
-        <div class="window-dots">
-          <span class="dot dot-r"></span>
-          <span class="dot dot-y"></span>
-          <span class="dot dot-g"></span>
+  <!-- Live Query / DAX Runner Modal with Simulated Output Table -->
+  <div class="modal-bg" id="queryModal" onclick="if(event.target===this) closeModal()">
+    <div class="modal-box">
+      <div class="m-head">
+        <div class="m-dots">
+          <span style="background:#ef4444;"></span>
+          <span style="background:#f59e0b;"></span>
+          <span style="background:#10b981;"></span>
         </div>
-        <span class="modal-title" id="modalTitle">query_inspector.sql</span>
-        <button class="close-modal" onclick="closeLogic()"><i class="fa-solid fa-xmark"></i></button>
+        <span id="mTitle" style="font-family:'JetBrains Mono',monospace; font-size:0.8rem; color:#cbd5e1;">query_runner.sql</span>
+        <button onclick="closeModal()" style="background:none; border:none; color:#94a3b8; font-size:1.1rem; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <div class="modal-body">
-        <pre id="modalCode"></pre>
+      <div class="m-body">
+        <pre id="mCode"></pre>
+        <div class="exec-status">
+          <span><i class="fa-solid fa-circle-check"></i> Execution Successful (0.014 sec)</span>
+          <span>Live Output Preview ↓</span>
+        </div>
+        <div id="mTableWrap"></div>
       </div>
     </div>
   </div>
 
+  <div id="toast"><i class="fa-solid fa-check"></i> Email Copied: akishor2563@gmail.com</div>
+
   <!-- Scripts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
   <script>
-    AOS.init({ duration: 750, once: true });
-
-    // 3D Tilt Init
-    VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
-      max: 6,
-      speed: 400,
-      glare: true,
-      "max-glare": 0.12
-    });
-
-    // Cursor Spotlight
-    const spotlight = document.getElementById('spotlight');
-    window.addEventListener('mousemove', e => {
-      spotlight.style.left = e.clientX + 'px';
-      spotlight.style.top = e.clientY + 'px';
-    });
-
-    // Typewriter Effect
-    const roles = [
-      "SQL Database & Query Specialist",
-      "Power BI & DAX Dashboard Developer",
-      "Advanced Excel 365 Data Modeler",
-      "Business Intelligence Analyst"
+    // 1. Fast Sci-Fi Boot Loader (1.4 seconds)
+    const bootFill = document.getElementById('boot-fill');
+    const bootPct = document.getElementById('boot-pct');
+    const bootLogs = document.getElementById('boot-logs');
+    const logs = [
+      "> Mounting MySQL Window Functions & CTEs...",
+      "> Loading Power BI Star Schema & DAX Engine...",
+      "> Initializing Interactive Charts... [OK]"
     ];
-    let rIdx = 0, cIdx = 0, deleting = false;
-    const typeEl = document.getElementById('typewriter');
-
-    function typeLoop() {
-      const current = roles[rIdx];
-      typeEl.textContent = current.substring(0, cIdx);
-      if (!deleting && cIdx < current.length) {
-        cIdx++;
-        setTimeout(typeLoop, 65);
-      } else if (deleting && cIdx > 0) {
-        cIdx--;
-        setTimeout(typeLoop, 35);
-      } else {
-        deleting = !deleting;
-        if (!deleting) rIdx = (rIdx + 1) % roles.length;
-        setTimeout(typeLoop, deleting ? 1600 : 300);
+    let progress = 0;
+    const bootTimer = setInterval(() => {
+      progress += 25;
+      bootFill.style.width = progress + '%';
+      bootPct.innerText = progress + '%';
+      if (logs[progress/25 - 1]) {
+        bootLogs.innerHTML += logs[progress/25 - 1] + "<br>";
       }
-    }
-    typeLoop();
+      if (progress >= 100) {
+        clearInterval(bootTimer);
+        setTimeout(() => {
+          document.getElementById('boot-screen').classList.add('hidden');
+        }, 250);
+      }
+    }, 260);
 
-    // Animated Number Counters
-    document.querySelectorAll('.counter').forEach(counter => {
-      const target = +counter.getAttribute('data-target');
-      const inc = target / 45;
-      let count = 0;
-      const update = () => {
-        count += inc;
-        if (count < target) {
-          counter.innerText = Math.ceil(count).toLocaleString();
-          requestAnimationFrame(update);
-        } else {
-          counter.innerText = target.toLocaleString();
-        }
-      };
-      update();
+    // 2. Interactive Neural Constellation Background
+    const canvas = document.getElementById('neural-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let mouse = { x: null, y: null };
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    window.addEventListener('mousemove', e => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
     });
 
-    // Interactive Slicer Filter
-    function filterProjects(cat, btn) {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      document.querySelectorAll('.project-card').forEach(card => {
-        if (cat === 'all' || card.dataset.category === cat) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
+    for (let i = 0; i < 55; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.6,
+        vy: (Math.random() - 0.5) * 0.6,
+        r: Math.random() * 2 + 1
       });
     }
 
-    // Code Snippet Database
-    const snippets = {
-      sql1: {
-        title: "retail_sales_window_functions.sql",
-        code: `-- 1. Rank Top Products per City using DENSE_RANK & CTE
-WITH CityProductSales AS (
-    SELECT 
-        c.city,
-        p.product_name,
-        SUM(o.quantity * p.price) AS total_revenue,
-        DENSE_RANK() OVER (
-            PARTITION BY c.city 
-            ORDER BY SUM(o.quantity * p.price) DESC
-        ) AS revenue_rank
-    FROM orders o
-    INNER JOIN customers c ON o.customer_id = c.customer_id
-    INNER JOIN products p ON o.product_id = p.product_id
-    GROUP BY c.city, p.product_name
-)
-SELECT * FROM CityProductSales
-WHERE revenue_rank <= 3;
+    function animateCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim();
 
--- 2. Track Order-over-Order Variance using LAG()
-SELECT 
-    customer_id,
-    order_date,
-    order_amount,
-    LAG(order_amount, 1, 0) OVER (
-        PARTITION BY customer_id ORDER BY order_date
-    ) AS prev_order_amount
-FROM orders;`
+      particles.forEach((p, idx) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = primaryColor;
+        ctx.fill();
+
+        // Connect to mouse
+        if (mouse.x) {
+          const dxm = p.x - mouse.x;
+          const dym = p.y - mouse.y;
+          const distM = Math.sqrt(dxm * dxm + dym * dym);
+          if (distM < 150) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = `rgba(56, 189, 248, ${1 - distM / 150})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+
+        // Connect nearby nodes
+        for (let j = idx + 1; j < particles.length; j++) {
+          const p2 = particles[j];
+          const dx = p.x - p2.x;
+          const dy = p.y - p2.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 115) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(p2.x, p2.y);
+            ctx.strokeStyle = `rgba(255, 255, 255, ${0.08 * (1 - dist / 115)})`;
+            ctx.stroke();
+          }
+        }
+      });
+      requestAnimationFrame(animateCanvas);
+    }
+    animateCanvas();
+
+    // 3. Typewriter Role
+    const roles = [
+      "SQL & Relational Database Analyst",
+      "Power BI & DAX Dashboard Developer",
+      "Advanced Excel 365 Data Modeler"
+    ];
+    let rI = 0, cI = 0, del = false;
+    function typeEffect() {
+      const cur = roles[rI];
+      document.getElementById('typewriter').textContent = "> " + cur.substring(0, cI) + "_";
+      if (!del && cI < cur.length) { cI++; setTimeout(typeEffect, 60); }
+      else if (del && cI > 0) { cI--; setTimeout(typeEffect, 30); }
+      else {
+        del = !del;
+        if (!del) rI = (rI + 1) % roles.length;
+        setTimeout(typeEffect, del ? 1500 : 250);
+      }
+    }
+    typeEffect();
+
+    // 4. Live Interactive Chart.js Simulator
+    const biCtx = document.getElementById('liveBiChart').getContext('2d');
+    const chartDataSets = {
+      pbi: {
+        labels: ['Mobile Sales', 'ElectroGlobal', 'Global Regional', 'Executive BI', 'Sales Practice'],
+        data: [95, 98, 92, 90, 88],
+        label: 'DAX & Model Complexity Score (%)'
       },
-      pbi1: {
-        title: "mobile_sales_dax_measures.dax",
-        code: `// 1. Total Revenue using Iterator Function SUMX
-Total Revenue = 
-SUMX(
-    'Sales_Fact',
-    'Sales_Fact'[Units_Sold] * RELATED('Dim_Product'[Unit_Price])
-)
-
-// 2. Previous Month Revenue & MoM% Growth
-PM Revenue = 
-CALCULATE(
-    [Total Revenue],
-    PREVIOUSMONTH('Dim_Calendar'[Date])
-)
-
-MoM Growth % = 
-DIVIDE(
-    [Total Revenue] - [PM Revenue],
-    [PM Revenue],
-    0
-)`
+      sql: {
+        labels: ['Joins', 'Window Functions', 'CTEs', 'Subqueries', 'Aggregations'],
+        data: [96, 94, 92, 90, 98],
+        label: 'SQL Query Proficiency (%)'
       },
-      pbi2: {
-        title: "electroglobal_star_schema.dax",
-        code: `// Dynamic High-Value Region Revenue Share %
-Region Revenue % = 
-VAR CurrentRegionRev = [Total Revenue]
-VAR AllRegionsRev = 
-    CALCULATE(
-        [Total Revenue],
-        ALL('Dim_Territory')
-    )
-RETURN
-    DIVIDE(CurrentRegionRev, AllRegionsRev, 0)
-
-// YTD Cumulative Sales
-Revenue YTD = 
-TOTALYTD([Total Revenue], 'Dim_Date'[Date])`
-      },
-      pbi3: {
-        title: "global_regional_analytics.dax",
-        code: `// Net Profit Margin & Top Performing Territory
-Net Profit = [Total Revenue] - [Total COGS]
-
-Profit Margin % = 
-DIVIDE([Net Profit], [Total Revenue], 0)
-
-Top Brand Sales = 
-CALCULATE(
-    [Total Revenue],
-    TOPN(1, VALUES('Dim_Brand'[Brand_Name]), [Total Revenue], DESC)
-)`
-      },
-      excel1: {
-        title: "superstore_power_pivot_model.txt",
-        code: `// Excel Power Pivot DAX & Dynamic Array Formulas
-
-1. Average Order Value (AOV) :=
-   DIVIDE([Total Sales Revenue], DISTINCTCOUNT(Orders[Order_ID]))
-
-2. Customer Retention & Dynamic Lookup:
-   =XLOOKUP(A2, Customers[Customer_ID], Customers[Segment], "Not Found")
-
-3. Multi-Condition Regional Aggregation:
-   =SUMIFS(Orders[Sales], Orders[Region], "West", Orders[Category], "Technology")`
+      xl: {
+        labels: ['Power Query', 'Power Pivot', 'XLOOKUP/Arrays', 'Pivot Dashboards', 'Data Cleaning'],
+        data: [94, 92, 96, 98, 95],
+        label: 'Excel 365 Analytics Score (%)'
       }
     };
 
-    function openLogic(key) {
-      document.getElementById('modalTitle').innerText = snippets[key].title;
-      document.getElementById('modalCode').innerText = snippets[key].code;
-      document.getElementById('logicModal').classList.add('open');
+    let liveChart = new Chart(biCtx, {
+      type: 'bar',
+      data: {
+        labels: chartDataSets.pbi.labels,
+        datasets: [{
+          label: chartDataSets.pbi.label,
+          data: chartDataSets.pbi.data,
+          backgroundColor: 'rgba(56, 189, 248, 0.35)',
+          borderColor: '#38bdf8',
+          borderWidth: 2,
+          borderRadius: 8
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { labels: { color: '#cbd5e1', font: { size: 11 } } } },
+        scales: {
+          y: { beginAtZero: true, max: 100, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#94a3b8' } },
+          x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 10 } } }
+        }
+      }
+    });
+
+    function updateChart(key, btn) {
+      document.querySelectorAll('.slicer-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      liveChart.data.labels = chartDataSets[key].labels;
+      liveChart.data.datasets[0].label = chartDataSets[key].label;
+      liveChart.data.datasets[0].data = chartDataSets[key].data;
+      liveChart.update();
     }
 
-    function closeLogic() {
-      document.getElementById('logicModal').classList.remove('open');
+    // 5. Competency Radar Chart
+    new Chart(document.getElementById('radarChart'), {
+      type: 'radar',
+      data: {
+        labels: ['SQL Joins & CTEs', 'Window Functions', 'Power BI DAX', 'Star Schema', 'Power Query ETL', 'Advanced Excel'],
+        datasets: [{
+          label: 'A Kishor Skill Index',
+          data: [95, 92, 94, 93, 95, 96],
+          backgroundColor: 'rgba(56, 189, 248, 0.2)',
+          borderColor: '#38bdf8',
+          pointBackgroundColor: '#10b981',
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          r: {
+            angleLines: { color: 'rgba(255,255,255,0.08)' },
+            grid: { color: 'rgba(255,255,255,0.08)' },
+            pointLabels: { color: '#e2e8f0', font: { size: 11 } },
+            ticks: { display: false, min: 50, max: 100 }
+          }
+        }
+      }
+    });
+
+    // 6. Filter Project Cards
+    function filterCards(cat, btn) {
+      document.querySelectorAll('.f-pill').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.p-card').forEach(card => {
+        card.style.display = (cat === 'all' || card.dataset.cat === cat) ? 'flex' : 'none';
+      });
     }
+
+    // 7. Live Query Runner with Simulated Result Table
+    const queries = {
+      sql1: {
+        title: "retail_analytics_window_query.sql",
+        code: `WITH CityTopProducts AS (
+    SELECT c.city, p.product_name,
+           SUM(o.quantity * p.price) AS total_rev,
+           DENSE_RANK() OVER(PARTITION BY c.city ORDER BY SUM(o.quantity * p.price) DESC) AS rnk
+    FROM orders o
+    JOIN customers c ON o.customer_id = c.customer_id
+    JOIN products p ON o.product_id = p.product_id
+    GROUP BY c.city, p.product_name
+)
+SELECT city, product_name, total_rev, rnk FROM CityTopProducts WHERE rnk <= 2;`,
+        table: `<table class="result-table">
+          <tr><th>city</th><th>product_name</th><th>total_rev</th><th>rnk</th></tr>
+          <tr><td>Kolkata</td><td>Flagship Smartphone 5G</td><td>₹4,85,000</td><td>1</td></tr>
+          <tr><td>Kolkata</td><td>Wireless Noise-Canceling Buds</td><td>₹2,10,400</td><td>2</td></tr>
+          <tr><td>Bengaluru</td><td>Ultrabook Pro 14</td><td>₹6,40,000</td><td>1</td></tr>
+        </table>`
+      },
+      pbi1: {
+        title: "mobile_sales_dax_engine.dax",
+        code: `// Dynamic Revenue & MoM% Variance Measure
+Total Revenue = SUMX('Sales_Fact', 'Sales_Fact'[Units] * RELATED('Dim_Mobile'[Price]))
+
+MoM Growth % = 
+VAR CurrRev = [Total Revenue]
+VAR PrevRev = CALCULATE([Total Revenue], PREVIOUSMONTH('Dim_Calendar'[Date]))
+RETURN DIVIDE(CurrRev - PrevRev, PrevRev, 0)`,
+        table: `<table class="result-table">
+          <tr><th>Brand_Name</th><th>Total Revenue</th><th>Units_Sold</th><th>MoM Growth %</th></tr>
+          <tr><td>Apple</td><td>$842,500</td><td>980</td><td>+18.4% ▲</td></tr>
+          <tr><td>Samsung</td><td>$715,200</td><td>1,140</td><td>+14.2% ▲</td></tr>
+          <tr><td>OnePlus</td><td>$412,800</td><td>820</td><td>+11.7% ▲</td></tr>
+        </table>`
+      },
+      pbi2: {
+        title: "electroglobal_star_schema.dax",
+        code: `// Territory Revenue Share % using ALL()
+Territory Share % = 
+DIVIDE(
+    [Total Revenue],
+    CALCULATE([Total Revenue], ALL('Dim_Territory')),
+    0
+)`,
+        table: `<table class="result-table">
+          <tr><th>Region</th><th>Total Revenue</th><th>Territory Share %</th><th>Profit Margin</th></tr>
+          <tr><td>North America</td><td>$1,120,000</td><td>42.5%</td><td>28.4%</td></tr>
+          <tr><td>Europe</td><td>$890,000</td><td>33.8%</td><td>25.1%</td></tr>
+          <tr><td>APAC</td><td>$625,000</td><td>23.7%</td><td>31.2%</td></tr>
+        </table>`
+      },
+      xl1: {
+        title: "superstore_power_pivot_model.fx",
+        code: `// Power Pivot DAX & Dynamic Array Formulas
+Average Order Value (AOV) := DIVIDE([Total Revenue], DISTINCTCOUNT(Orders[Order_ID]))
+
+=SUMIFS(Orders[Sales], Orders[Region], "West", Orders[Segment], "Corporate")`,
+        table: `<table class="result-table">
+          <tr><th>Hub_Region</th><th>Total_Sales</th><th>Revenue_Share</th><th>Avg_Order_Value</th></tr>
+          <tr><td>West Hub</td><td>$710,220</td><td>31.5%</td><td>$458.20</td></tr>
+          <tr><td>East Hub</td><td>$664,890</td><td>29.5%</td><td>$442.10</td></tr>
+          <tr><td>Central Hub</td><td>$492,640</td><td>21.8%</td><td>$415.80</td></tr>
+        </table>`
+      }
+    };
+
+    function runQuery(key) {
+      document.getElementById('mTitle').innerText = queries[key].title;
+      document.getElementById('mCode').innerText = queries[key].code;
+      document.getElementById('mTableWrap').innerHTML = queries[key].table;
+      document.getElementById('queryModal').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('queryModal').classList.remove('open');
+    }
+
+    // 8. Live Theme Switcher
+    function setTheme(hex, rgb) {
+      document.documentElement.style.setProperty('--primary', hex);
+      document.documentElement.style.setProperty('--primary-rgb', rgb);
+      liveChart.data.datasets[0].borderColor = hex;
+      liveChart.data.datasets[0].backgroundColor = `rgba(${rgb}, 0.35)`;
+      liveChart.update();
+    }
+
+    // 9. Copy Email Toast
+    function copyEmail() {
+      navigator.clipboard.writeText('akishor2563@gmail.com');
+      const t = document.getElementById('toast');
+      t.style.display = 'block';
+      setTimeout(() => t.style.display = 'none', 2500);
+    }
+
+    // Init 3D Tilt
+    VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+      max: 5,
+      speed: 400,
+      glare: true,
+      "max-glare": 0.1
+    });
   </script>
 </body>
 </html>

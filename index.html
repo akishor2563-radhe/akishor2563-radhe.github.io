@@ -3,24 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A Kishor | Data Analyst Portfolio</title>
-  
+  <title>A Kishor | Interactive BI & Data Portfolio</title>
+
   <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
-  <!-- AOS (Animate On Scroll) Library -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
 
   <style>
     :root {
-      --bg: #070b14;
-      --card-bg: rgba(17, 24, 39, 0.7);
+      --bg: #030712;
+      --card-bg: rgba(17, 24, 39, 0.65);
       --card-border: rgba(255, 255, 255, 0.08);
       --primary: #38bdf8;
-      --primary-glow: rgba(56, 189, 248, 0.3);
+      --primary-glow: rgba(56, 189, 248, 0.35);
       --secondary: #818cf8;
-      --accent: #34d399;
+      --accent: #10b981;
+      --warning: #f59e0b;
       --text: #f8fafc;
       --text-muted: #94a3b8;
     }
@@ -32,238 +31,333 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.6;
       overflow-x: hidden;
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(129, 140, 248, 0.08) 0%, transparent 40%);
-      background-attachment: fixed;
-      padding: 0 1.5rem;
+      position: relative;
     }
+
+    /* Animated Cyber Grid Background */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image: 
+        linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 45px 45px;
+      mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    /* Mouse Cursor Spotlight */
+    #spotlight {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56, 189, 248, 0.11) 0%, rgba(129, 140, 248, 0.05) 40%, transparent 70%);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: -1;
+      transition: width 0.2s, height 0.2s;
+    }
+
+    /* Floating Glass Navbar */
+    nav {
+      position: fixed;
+      top: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      padding: 0.6rem 1.5rem;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+      z-index: 100;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--primary); }
+
+    .nav-logo {
+      color: #fff !important;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .nav-logo span { color: var(--primary); }
 
     .container {
       max-width: 1200px;
       margin: 0 auto;
+      padding: 0 1.5rem;
     }
 
-    /* Header & Hero */
+    /* Hero Section */
     header {
-      min-height: 85vh;
+      min-height: 92vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 4rem 0 2rem;
-    }
-
-    .profile-wrapper {
-      position: relative;
-      margin-bottom: 1.5rem;
+      padding: 7rem 0 3rem;
     }
 
     .profile-img {
-      width: 135px;
-      height: 135px;
+      width: 125px;
+      height: 125px;
       border-radius: 50%;
       object-fit: cover;
       border: 3px solid var(--primary);
-      box-shadow: 0 0 30px var(--primary-glow);
-      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 0 35px var(--primary-glow);
+      margin-bottom: 1.25rem;
     }
 
-    .profile-img:hover {
-      transform: scale(1.06);
-    }
-
-    .badge {
+    .hud-badge {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      background: rgba(56, 189, 248, 0.1);
-      border: 1px solid var(--primary-glow);
-      color: var(--primary);
+      gap: 0.6rem;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
       padding: 0.4rem 1.1rem;
       border-radius: 9999px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      margin-bottom: 1.5rem;
-      backdrop-filter: blur(8px);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
     }
 
-    .badge-dot {
+    .pulse-dot {
       width: 8px;
       height: 8px;
-      background: var(--accent);
+      background: #10b981;
       border-radius: 50%;
-      box-shadow: 0 0 10px var(--accent);
+      box-shadow: 0 0 12px #10b981;
       animation: pulse 2s infinite;
     }
 
     @keyframes pulse {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
-      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { box-shadow: 0 0 0 9px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
     }
 
     h1 {
-      font-size: 3.25rem;
+      font-size: clamp(2.5rem, 6vw, 4.2rem);
       font-weight: 800;
       letter-spacing: -0.03em;
-      margin-bottom: 0.5rem;
-      background: linear-gradient(135deg, #ffffff 30%, var(--primary) 100%);
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+      background: linear-gradient(135deg, #ffffff 35%, #38bdf8 75%, #818cf8 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    .role {
-      font-size: 1.25rem;
+    .typewriter-box {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
       color: var(--primary);
-      font-weight: 600;
+      font-weight: 500;
       margin-bottom: 1.25rem;
-      letter-spacing: -0.01em;
+      min-height: 2rem;
     }
+
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      background-color: var(--primary);
+      animation: blink 0.8s infinite;
+    }
+
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
     .bio {
       max-width: 680px;
-      margin: 0 auto 2.25rem;
       color: var(--text-muted);
-      font-size: 1.05rem;
-      line-height: 1.7;
+      font-size: 1.02rem;
+      margin-bottom: 2rem;
     }
 
-    .header-links {
+    .hero-btns {
       display: flex;
-      justify-content: center;
-      gap: 1rem;
+      gap: 0.9rem;
       flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 3.5rem;
     }
 
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.55rem;
       padding: 0.75rem 1.4rem;
       border-radius: 12px;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 600;
       text-decoration: none;
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.25s ease;
       cursor: pointer;
+      border: none;
     }
 
-    .btn-primary {
+    .btn-glow {
       background: linear-gradient(135deg, #0284c7, #2563eb);
-      color: #ffffff;
-      box-shadow: 0 4px 20px var(--primary-glow);
+      color: #fff;
+      box-shadow: 0 4px 25px var(--primary-glow);
     }
 
-    .btn-primary:hover {
+    .btn-glow:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(56, 189, 248, 0.45);
+      box-shadow: 0 8px 30px rgba(56, 189, 248, 0.55);
     }
 
-    .btn-outline {
+    .btn-glass {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       color: var(--text);
       backdrop-filter: blur(12px);
     }
 
-    .btn-outline:hover {
-      background: rgba(255, 255, 255, 0.06);
-      border-color: rgba(56, 189, 248, 0.4);
+    .btn-glass:hover {
+      border-color: var(--primary);
+      background: rgba(56, 189, 248, 0.08);
       transform: translateY(-3px);
     }
 
-    /* Section Styling */
-    section {
-      padding: 4.5rem 0;
+    /* Live BI KPI Strip */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1.2rem;
+      width: 100%;
+    }
+
+    .kpi-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      padding: 1.35rem;
+      backdrop-filter: blur(16px);
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary);
+    }
+
+    .kpi-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+
+    .kpi-top i { color: var(--primary); font-size: 1.1rem; }
+
+    .kpi-num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #fff;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .kpi-sub {
+      font-size: 0.75rem;
+      color: #34d399;
+      margin-top: 0.2rem;
+    }
+
+    /* Sections */
+    section { padding: 4.5rem 0; }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2.25rem;
     }
 
     .section-title {
       font-size: 1.85rem;
-      font-weight: 700;
-      margin-bottom: 2rem;
+      font-weight: 800;
       display: flex;
       align-items: center;
       gap: 0.75rem;
     }
 
-    .section-title i {
-      color: var(--primary);
-      font-size: 1.6rem;
-    }
+    .section-title i { color: var(--primary); }
 
-    /* Skills Grid */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .skill-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 18px;
-      padding: 1.75rem;
-      backdrop-filter: blur(14px);
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .skill-card:hover {
-      border-color: rgba(56, 189, 248, 0.4);
-      transform: translateY(-5px);
-      box-shadow: 0 10px 30px -10px var(--primary-glow);
-    }
-
-    .skill-header {
+    /* Interactive Filter Tabs (Slicers) */
+    .filter-tabs {
       display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      margin-bottom: 1.25rem;
-    }
-
-    .skill-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-    }
-
-    .icon-sql { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
-    .icon-pbi { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
-    .icon-excel { background: rgba(16, 185, 129, 0.15); color: #10b981; }
-
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
       gap: 0.5rem;
+      background: rgba(15, 23, 42, 0.8);
+      padding: 0.35rem;
+      border-radius: 12px;
+      border: 1px solid var(--card-border);
+      flex-wrap: wrap;
     }
 
-    .tag {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      padding: 0.35rem 0.75rem;
+    .filter-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      padding: 0.5rem 1rem;
       border-radius: 8px;
       font-size: 0.82rem;
-      color: #cbd5e1;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--primary);
+      color: #030712;
+      box-shadow: 0 0 15px var(--primary-glow);
     }
 
     /* Projects Grid */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
       gap: 1.5rem;
     }
 
@@ -271,48 +365,223 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 18px;
-      padding: 1.75rem;
+      padding: 1.65rem;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       backdrop-filter: blur(14px);
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: border-color 0.3s, box-shadow 0.3s;
+      transform-style: preserve-3d;
     }
 
     .project-card:hover {
-      transform: translateY(-6px);
-      border-color: rgba(56, 189, 248, 0.45);
-      box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.5);
+      border-color: rgba(56, 189, 248, 0.5);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
     }
 
-    .project-type {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      font-weight: 700;
-      color: var(--primary);
-      margin-bottom: 0.4rem;
+    .card-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.85rem;
     }
+
+    .badge-cat {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: 6px;
+      letter-spacing: 0.04em;
+    }
+
+    .cat-sql { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
+    .cat-pbi { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+    .cat-excel { background: rgba(16, 185, 129, 0.15); color: #34d399; }
 
     .project-title {
-      font-size: 1.25rem;
+      font-size: 1.22rem;
       font-weight: 700;
-      margin-bottom: 0.6rem;
-      line-height: 1.35;
+      margin-bottom: 0.55rem;
+      color: #fff;
     }
 
     .project-desc {
       color: var(--text-muted);
-      font-size: 0.9rem;
-      line-height: 1.6;
-      margin-bottom: 1.25rem;
+      font-size: 0.88rem;
+      margin-bottom: 1.1rem;
     }
 
-    .project-tech {
+    .impact-box {
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 3px solid var(--accent);
+      padding: 0.55rem 0.8rem;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.8rem;
+      color: #e2e8f0;
+      margin-bottom: 1.2rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .project-tags {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.45rem;
-      margin-bottom: 1.5rem;
+      gap: 0.4rem;
+      margin-bottom: 1.35rem;
+    }
+
+    .tag {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      padding: 0.22rem 0.55rem;
+      border-radius: 6px;
+      font-size: 0.73rem;
+      color: #cbd5e1;
+    }
+
+    .card-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.65rem;
+    }
+
+    .btn-sm {
+      padding: 0.55rem 0.8rem;
+      font-size: 0.8rem;
+      border-radius: 9px;
+      justify-content: center;
+    }
+
+    .btn-code {
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--primary);
+    }
+
+    .btn-code:hover {
+      background: var(--primary);
+      color: #030712;
+    }
+
+    /* Skills Matrix */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 1.65rem;
+    }
+
+    .skill-box h3 {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-size: 1.15rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .bar-item { margin-bottom: 0.9rem; }
+    .bar-top {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      margin-bottom: 0.3rem;
+      color: #cbd5e1;
+    }
+    .bar-track {
+      width: 100%;
+      height: 7px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+
+    /* Interactive Code Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 7, 18, 0.85);
+      backdrop-filter: blur(10px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      padding: 1.5rem;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal-window {
+      background: #0f172a;
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      border-radius: 16px;
+      max-width: 720px;
+      width: 100%;
+      overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+      animation: zoomIn 0.25s ease;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.92); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-header {
+      background: #1e293b;
+      padding: 0.9rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .window-dots { display: flex; gap: 0.45rem; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-r { background: #ef4444; }
+    .dot-y { background: #f59e0b; }
+    .dot-g { background: #10b981; }
+
+    .modal-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: #cbd5e1;
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      max-height: 75vh;
+      overflow-y: auto;
+    }
+
+    pre {
+      background: #060b16;
+      padding: 1.15rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.06);
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: #38bdf8;
+      line-height: 1.6;
     }
 
     footer {
@@ -320,274 +589,599 @@
       padding: 3rem 0;
       text-align: center;
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       margin-top: 3rem;
+    }
+
+    @media (max-width: 640px) {
+      nav { width: 92%; justify-content: space-around; padding: 0.6rem 0.8rem; gap: 0.5rem; }
     }
   </style>
 </head>
 <body>
 
+  <div class="bg-grid"></div>
+  <div id="spotlight"></div>
+
+  <!-- Floating Navbar -->
+  <nav>
+    <a href="#" class="nav-logo"><i class="fa-solid fa-chart-pie"></i> A KISHOR<span>.BI</span></a>
+    <a href="#projects">Dashboards</a>
+    <a href="#skills">Toolkit</a>
+    <a href="https://github.com/akishor2563-radhe" target="_blank">GitHub</a>
+  </nav>
+
   <div class="container">
-    <!-- Hero / Intro -->
-    <header data-aos="fade-up" data-aos-duration="1000">
-      <div class="profile-wrapper">
-        <img src="profile.jpg" alt="A Kishor" class="profile-img" onerror="this.style.display='none'">
+    <!-- Hero Section -->
+    <header data-aos="fade-up">
+      <img src="profile.jpg" alt="A Kishor" class="profile-img" onerror="this.style.display='none'">
+      
+      <div class="hud-badge">
+        <span class="pulse-dot"></span>
+        System Online · Open to Data Analyst Roles
       </div>
-      <div class="badge">
-        <span class="badge-dot"></span>
-        Available for Data Analyst Roles
-      </div>
+
       <h1>A Kishor</h1>
-      <p class="role">Data Analyst | SQL · Power BI · Advanced Excel</p>
+
+      <div class="typewriter-box">
+        <span id="typewriter"></span><span class="cursor">&nbsp;</span>
+      </div>
+
       <p class="bio">
-        Data Analyst proficient in relational SQL data modeling, advanced Power BI business intelligence dashboards, and Excel reporting engines to transform complex data into actionable decisions.
+        Transforming raw multi-table datasets into executive decision systems using <strong>SQL</strong>, <strong>Power BI (DAX & Star Schema)</strong>, and <strong>Advanced Excel</strong>.
       </p>
-      <div class="header-links">
-        <a href="resume.pdf" target="_blank" class="btn btn-primary">
-          <i class="fa-solid fa-file-pdf"></i> View Resume
+
+      <div class="hero-btns">
+        <a href="resume.pdf" target="_blank" class="btn btn-glow">
+          <i class="fa-solid fa-file-arrow-down"></i> Download CV
         </a>
-        <a href="https://www.linkedin.com/in/akishor020501" target="_blank" class="btn btn-outline">
+        <a href="https://www.linkedin.com/in/akishor020501" target="_blank" class="btn btn-glass">
           <i class="fa-brands fa-linkedin"></i> LinkedIn
         </a>
-        <a href="https://github.com/akishor2563-radhe?tab=repositories" target="_blank" class="btn btn-outline">
-          <i class="fa-brands fa-github"></i> All Repositories
+        <a href="https://github.com/akishor2563-radhe?tab=repositories" target="_blank" class="btn btn-glass">
+          <i class="fa-brands fa-github"></i> GitHub Profile
         </a>
+      </div>
+
+      <!-- Live Animated BI KPI Strip -->
+      <div class="kpi-grid">
+        <div class="kpi-card" data-tilt>
+          <div class="kpi-top"><span>Portfolio Projects</span><i class="fa-solid fa-cubes"></i></div>
+          <div class="kpi-num"><span class="counter" data-target="8">0</span>+</div>
+          <div class="kpi-sub">▲ SQL, Power BI & Excel</div>
+        </div>
+        <div class="kpi-card" data-tilt>
+          <div class="kpi-top"><span>Records Processed</span><i class="fa-solid fa-database"></i></div>
+          <div class="kpi-num"><span class="counter" data-target="15000">0</span>+</div>
+          <div class="kpi-sub">▲ Cleaned via Power Query & SQL</div>
+        </div>
+        <div class="kpi-card" data-tilt>
+          <div class="kpi-top"><span>DAX & SQL Queries</span><i class="fa-solid fa-terminal"></i></div>
+          <div class="kpi-num"><span class="counter" data-target="60">0</span>+</div>
+          <div class="kpi-sub">▲ CTEs, Joins & Time Intelligence</div>
+        </div>
+        <div class="kpi-card" data-tilt>
+          <div class="kpi-top"><span>Dashboard Views</span><i class="fa-solid fa-chart-line"></i></div>
+          <div class="kpi-num"><span class="counter" data-target="18">0</span>+</div>
+          <div class="kpi-sub">▲ Interactive Executive Reports</div>
+        </div>
       </div>
     </header>
 
-    <!-- Technical Toolkit -->
-    <section>
-      <h2 class="section-title" data-aos="fade-right" data-aos-duration="800">
-        <i class="fa-solid fa-code"></i> Technical Toolkit
-      </h2>
-      <div class="skills-grid">
-        <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
-          <div class="skill-header">
-            <div class="skill-icon icon-sql"><i class="fa-solid fa-database"></i></div>
-            <h3>SQL & RDBMS</h3>
-          </div>
-          <div class="skill-tags">
-            <span class="tag">MySQL</span>
-            <span class="tag">Multi-Table Joins</span>
-            <span class="tag">Window Functions</span>
-            <span class="tag">CTEs</span>
-            <span class="tag">Subqueries</span>
-            <span class="tag">Aggregations</span>
-          </div>
-        </div>
-
-        <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
-          <div class="skill-header">
-            <div class="skill-icon icon-pbi"><i class="fa-solid fa-chart-column"></i></div>
-            <h3>Power BI</h3>
-          </div>
-          <div class="skill-tags">
-            <span class="tag">Power BI Desktop</span>
-            <span class="tag">DAX Measures</span>
-            <span class="tag">Star Schema</span>
-            <span class="tag">Power Query ETL</span>
-            <span class="tag">KPI Dashboards</span>
-            <span class="tag">Visual Analytics</span>
-          </div>
-        </div>
-
-        <div class="skill-card" data-aos="fade-up" data-aos-delay="300">
-          <div class="skill-header">
-            <div class="skill-icon icon-excel"><i class="fa-solid fa-file-excel"></i></div>
-            <h3>Advanced Excel</h3>
-          </div>
-          <div class="skill-tags">
-            <span class="tag">Excel 365</span>
-            <span class="tag">XLOOKUP / INDEX MATCH</span>
-            <span class="tag">Pivot Tables</span>
-            <span class="tag">Power Pivot</span>
-            <span class="tag">Data Cleaning</span>
-            <span class="tag">Dynamic Formulas</span>
-          </div>
+    <!-- Interactive Projects Section -->
+    <section id="projects">
+      <div class="section-header" data-aos="fade-up">
+        <h2 class="section-title"><i class="fa-solid fa-bolt"></i> Interactive Analytics Command Center</h2>
+        
+        <!-- Slicer Filter Buttons -->
+        <div class="filter-tabs">
+          <button class="filter-btn active" onclick="filterProjects('all', this)">All (8)</button>
+          <button class="filter-btn" onclick="filterProjects('pbi', this)">Power BI (5)</button>
+          <button class="filter-btn" onclick="filterProjects('sql', this)">SQL (1)</button>
+          <button class="filter-btn" onclick="filterProjects('excel', this)">Excel (2)</button>
         </div>
       </div>
-    </section>
 
-    <!-- Featured Projects -->
-    <section>
-      <h2 class="section-title" data-aos="fade-right" data-aos-duration="800">
-        <i class="fa-solid fa-layer-group"></i> Featured Projects
-      </h2>
       <div class="projects-grid">
 
-        <!-- 1. SQL Retail Analytics -->
-        <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+        <!-- 1. SQL Project -->
+        <div class="project-card" data-category="sql" data-tilt>
           <div>
-            <div class="project-type">Database & SQL</div>
+            <div class="card-top-bar">
+              <span class="badge-cat cat-sql">MySQL Database</span>
+              <i class="fa-solid fa-database" style="color:#38bdf8;"></i>
+            </div>
             <h3 class="project-title">Retail & E-Commerce Sales Analytics</h3>
-            <p class="project-desc">Normalized database schema across Customers, Products, and Orders using Multi-Table Joins, CTEs, and Window Functions.</p>
+            <p class="project-desc">Normalized relational schema across Customers, Products, and Orders to solve 20+ complex business KPI scenarios.</p>
+            <div class="impact-box">⚡ Window Functions · CTEs · Multi-Table Joins</div>
           </div>
           <div>
-            <div class="project-tech">
+            <div class="project-tags">
               <span class="tag">MySQL</span>
-              <span class="tag">Window Functions</span>
+              <span class="tag">ROW_NUMBER / DENSE_RANK</span>
+              <span class="tag">LAG & LEAD</span>
               <span class="tag">CTEs</span>
-              <span class="tag">Joins</span>
             </div>
-            <a href="https://github.com/akishor2563-radhe/SQL-Retail-Sales-Analytics" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">
-              <i class="fa-brands fa-github"></i> View Project
-            </a>
+            <div class="card-actions">
+              <button class="btn btn-sm btn-code" onclick="openLogic('sql1')">
+                <i class="fa-solid fa-code"></i> Inspect SQL
+              </button>
+              <a href="https://github.com/akishor2563-radhe/SQL-Retail-Sales-Analytics" target="_blank" class="btn btn-sm btn-glass">
+                <i class="fa-brands fa-github"></i> Repo ↗
+              </a>
+            </div>
           </div>
         </div>
 
         <!-- 2. Power BI Mobile Sales -->
-        <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="project-card" data-category="pbi" data-tilt>
           <div>
-            <div class="project-type">Power BI Dashboard</div>
+            <div class="card-top-bar">
+              <span class="badge-cat cat-pbi">Power BI</span>
+              <i class="fa-solid fa-mobile-screen-button" style="color:#fbbf24;"></i>
+            </div>
             <h3 class="project-title">Mobile Phone Sales Analytics</h3>
-            <p class="project-desc">Interactive dashboard tracking brand volume, revenue performance, and regional sales KPIs with customized DAX.</p>
+            <p class="project-desc">Two-page interactive executive dashboard tracking mobile brand performance, MoM% growth, and payment channels.</p>
+            <div class="impact-box">📊 Executive Overview + Deep-Dive Drillthrough</div>
           </div>
           <div>
-            <div class="project-tech">
+            <div class="project-tags">
               <span class="tag">Power BI</span>
-              <span class="tag">DAX</span>
-              <span class="tag">ETL</span>
-              <span class="tag">Data Modeling</span>
+              <span class="tag">DAX Measures</span>
+              <span class="tag">Power Query</span>
+              <span class="tag">Tooltips</span>
             </div>
-            <a href="https://github.com/akishor2563-radhe/Mobile-Phone-Sales-Analysis-PowerBI" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">
-              <i class="fa-brands fa-github"></i> View Project
-            </a>
+            <div class="card-actions">
+              <button class="btn btn-sm btn-code" onclick="openLogic('pbi1')">
+                <i class="fa-solid fa-calculator"></i> Inspect DAX
+              </button>
+              <a href="https://github.com/akishor2563-radhe/Mobile-Phone-Sales-Analysis-PowerBI" target="_blank" class="btn btn-sm btn-glass">
+                <i class="fa-brands fa-github"></i> Repo ↗
+              </a>
+            </div>
           </div>
         </div>
 
         <!-- 3. Power BI ElectroGlobal -->
-        <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="project-card" data-category="pbi" data-tilt>
           <div>
-            <div class="project-type">Power BI Dashboard</div>
+            <div class="card-top-bar">
+              <span class="badge-cat cat-pbi">Power BI</span>
+              <i class="fa-solid fa-globe" style="color:#fbbf24;"></i>
+            </div>
             <h3 class="project-title">ElectroGlobal Executive Dashboard</h3>
-            <p class="project-desc">Enterprise-grade dashboard built for ElectroGlobal Inc. featuring multi-table data modeling, star schema, and advanced DAX.</p>
+            <p class="project-desc">Enterprise BI solution featuring multi-table Star Schema data modeling and dynamic time-intelligence DAX calculations.</p>
+            <div class="impact-box">🌟 1-to-Many Star Schema Architecture</div>
           </div>
           <div>
-            <div class="project-tech">
-              <span class="tag">Power BI</span>
+            <div class="project-tags">
               <span class="tag">Star Schema</span>
-              <span class="tag">Complex DAX</span>
+              <span class="tag">CALCULATE / SUMX</span>
+              <span class="tag">Time Intelligence</span>
             </div>
-            <a href="https://github.com/akishor2563-radhe/ElectroGlobal-Executive-Dashboard-PowerBI" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">
-              <i class="fa-brands fa-github"></i> View Project
-            </a>
+            <div class="card-actions">
+              <button class="btn btn-sm btn-code" onclick="openLogic('pbi2')">
+                <i class="fa-solid fa-calculator"></i> Inspect DAX
+              </button>
+              <a href="https://github.com/akishor2563-radhe/ElectroGlobal-Executive-Dashboard-PowerBI" target="_blank" class="btn btn-sm btn-glass">
+                <i class="fa-brands fa-github"></i> Repo ↗
+              </a>
+            </div>
           </div>
         </div>
 
-        <!-- 4. Power BI Global Sales Regional -->
-        <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+        <!-- 4. Excel SuperStore Capstone -->
+        <div class="project-card" data-category="excel" data-tilt>
           <div>
-            <div class="project-type">Power BI Dashboard</div>
+            <div class="card-top-bar">
+              <span class="badge-cat cat-excel">Excel Capstone</span>
+              <i class="fa-solid fa-file-excel" style="color:#34d399;"></i>
+            </div>
+            <h3 class="project-title">SuperStore Sales Analytics ($2.25M)</h3>
+            <p class="project-desc">Multi-view retail analytics system analyzing 9,800+ transactions across Regional, Product, and Customer segments.</p>
+            <div class="impact-box">💰 West & East Hubs = 61% Total Revenue</div>
+          </div>
+          <div>
+            <div class="project-tags">
+              <span class="tag">Excel 365</span>
+              <span class="tag">Power Pivot</span>
+              <span class="tag">Power Query</span>
+              <span class="tag">9+ DAX Measures</span>
+            </div>
+            <div class="card-actions">
+              <button class="btn btn-sm btn-code" onclick="openLogic('excel1')">
+                <i class="fa-solid fa-code"></i> Inspect Model
+              </button>
+              <a href="https://github.com/akishor2563-radhe/Capstone-SuperStore-Sales-Analytics-Excel" target="_blank" class="btn btn-sm btn-glass">
+                <i class="fa-brands fa-github"></i> Repo ↗
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Power BI Global Sales Regional -->
+        <div class="project-card" data-category="pbi" data-tilt>
+          <div>
+            <div class="card-top-bar">
+              <span class="badge-cat cat-pbi">Power BI</span>
+              <i class="fa-solid fa-map-location-dot" style="color:#fbbf24;"></i>
+            </div>
             <h3 class="project-title">Global Sales & Regional Analytics</h3>
-            <p class="project-desc">Global sales revenue and regional analytics dashboard built with multi-table relational datasets for tracking territory KPIs.</p>
+            <p class="project-desc">Territory revenue breakdown and regional profitability tracker built over a multi-table relational dataset.</p>
+            <div class="impact-box">🌍 Cross-Continent Revenue & Margin Tracking</div>
           </div>
           <div>
-            <div class="project-tech">
+            <div class="project-tags">
               <span class="tag">Power BI</span>
-              <span class="tag">Territory Analysis</span>
-              <span class="tag">DAX</span>
+              <span class="tag">Geo-Mapping</span>
+              <span class="tag">Relational Model</span>
             </div>
-            <a href="https://github.com/akishor2563-radhe/Global-Sales-Regional-Analytics-PowerBI" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">
-              <i class="fa-brands fa-github"></i> View Project
-            </a>
+            <div class="card-actions">
+              <button class="btn btn-sm btn-code" onclick="openLogic('pbi3')">
+                <i class="fa-solid fa-calculator"></i> Inspect DAX
+              </button>
+              <a href="https://github.com/akishor2563-radhe/Global-Sales-Regional-Analytics-PowerBI" target="_blank" class="btn btn-sm btn-glass">
+                <i class="fa-brands fa-github"></i> Repo ↗
+              </a>
+            </div>
           </div>
         </div>
 
-        <!-- 5. Power BI Executive Sales -->
-        <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+        <!-- 6. Power BI Executive Sales -->
+        <div class="project-card" data-category="pbi" data-tilt>
           <div>
-            <div class="project-type">Power BI Dashboard</div>
+            <div class="card-top-bar">
+              <span class="badge-cat cat-pbi">Power BI</span>
+              <i class="fa-solid fa-chart-column" style="color:#fbbf24;"></i>
+            </div>
             <h3 class="project-title">Executive Sales & Order Performance</h3>
-            <p class="project-desc">Executive-level sales and order fulfillment performance dashboard analyzing transactional trends, margins, and operational metrics.</p>
+            <p class="project-desc">Order fulfillment, revenue velocity, and top customer contribution report designed for C-suite decision makers.</p>
+            <div class="impact-box">📈 Dynamic KPI Cards & Slicer Sync</div>
           </div>
           <div>
-            <div class="project-tech">
+            <div class="project-tags">
               <span class="tag">Power BI</span>
-              <span class="tag">Order Analytics</span>
-              <span class="tag">KPI Cards</span>
+              <span class="tag">Order KPIs</span>
+              <span class="tag">Interactive Visuals</span>
             </div>
-            <a href="https://github.com/akishor2563-radhe/Executive-Sales-Dashboard-PowerBI" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">
-              <i class="fa-brands fa-github"></i> View Project
-            </a>
+            <div class="card-actions">
+              <button class="btn btn-sm btn-code" onclick="openLogic('pbi1')">
+                <i class="fa-solid fa-calculator"></i> Inspect DAX
+              </button>
+              <a href="https://github.com/akishor2563-radhe/Executive-Sales-Dashboard-PowerBI" target="_blank" class="btn btn-sm btn-glass">
+                <i class="fa-brands fa-github"></i> Repo ↗
+              </a>
+            </div>
           </div>
         </div>
 
-        <!-- 6. Power BI Sales Practice -->
-        <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+        <!-- 7. Power BI Sales Practice -->
+        <div class="project-card" data-category="pbi" data-tilt>
           <div>
-            <div class="project-type">Power BI Dashboard</div>
+            <div class="card-top-bar">
+              <span class="badge-cat cat-pbi">Power BI</span>
+              <i class="fa-solid fa-Sliders" style="color:#fbbf24;"></i>
+            </div>
             <h3 class="project-title">Sales Practice Analysis Dashboard</h3>
-            <p class="project-desc">Practical retail sales dashboard utilizing calculated columns, time-intelligence DAX measures, and drill-down reporting filters.</p>
+            <p class="project-desc">Analytical model implementing calculated columns, granular DAX measures, and drill-down visual hierarchies.</p>
+            <div class="impact-box">🔍 Granular Category & Segment Drill-Downs</div>
           </div>
           <div>
-            <div class="project-tech">
+            <div class="project-tags">
               <span class="tag">Power BI</span>
               <span class="tag">Calculated Columns</span>
               <span class="tag">DAX</span>
             </div>
-            <a href="https://github.com/akishor2563-radhe/Sales-Practice-Dashboard-PowerBI" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">
-              <i class="fa-brands fa-github"></i> View Project
-            </a>
-          </div>
-        </div>
-
-        <!-- 7. Excel Capstone -->
-        <div class="project-card" data-aos="fade-up" data-aos-delay="100">
-          <div>
-            <div class="project-type">Excel Capstone</div>
-            <h3 class="project-title">SuperStore Sales Analytics Dashboard</h3>
-            <p class="project-desc">Comprehensive reporting model analyzing 9,800+ retail transactions with Power Query, Power Pivot, and 4 dedicated dashboard tabs.</p>
-          </div>
-          <div>
-            <div class="project-tech">
-              <span class="tag">Excel 365</span>
-              <span class="tag">Power Query</span>
-              <span class="tag">Power Pivot</span>
-              <span class="tag">DAX</span>
+            <div class="card-actions">
+              <button class="btn btn-sm btn-code" onclick="openLogic('pbi2')">
+                <i class="fa-solid fa-calculator"></i> Inspect DAX
+              </button>
+              <a href="https://github.com/akishor2563-radhe/Sales-Practice-Dashboard-PowerBI-" target="_blank" class="btn btn-sm btn-glass">
+                <i class="fa-brands fa-github"></i> Repo ↗
+              </a>
             </div>
-            <a href="https://github.com/akishor2563-radhe/Capstone-SuperStore-Sales-Analytics-Excel" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">
-              <i class="fa-brands fa-github"></i> View Project
-            </a>
           </div>
         </div>
 
-        <!-- 8. Excel Analytics Repository -->
-        <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+        <!-- 8. Excel Data Analytics Projects -->
+        <div class="project-card" data-category="excel" data-tilt>
           <div>
-            <div class="project-type">Excel Analytics</div>
+            <div class="card-top-bar">
+              <span class="badge-cat cat-excel">Excel Suite</span>
+              <i class="fa-solid fa-table" style="color:#34d399;"></i>
+            </div>
             <h3 class="project-title">Excel Data Analytics Projects</h3>
-            <p class="project-desc">Collection of advanced Excel dashboard solutions, data cleaning pipelines, and business KPI sheets built for operational analysis.</p>
+            <p class="project-desc">Collection of automated Excel dashboards, multi-condition formula models, and data cleansing pipelines.</p>
+            <div class="impact-box">⚙️ XLOOKUP · INDEX/MATCH · Dynamic Arrays</div>
           </div>
           <div>
-            <div class="project-tech">
+            <div class="project-tags">
               <span class="tag">Excel 365</span>
               <span class="tag">Pivot Tables</span>
-              <span class="tag">Formulas</span>
-              <span class="tag">Cleansing</span>
+              <span class="tag">Advanced Formulas</span>
             </div>
-            <a href="https://github.com/akishor2563-radhe/Excel-Data-Analytics-Projects" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">
-              <i class="fa-brands fa-github"></i> View Project
-            </a>
+            <div class="card-actions">
+              <button class="btn btn-sm btn-code" onclick="openLogic('excel1')">
+                <i class="fa-solid fa-code"></i> Inspect Formulas
+              </button>
+              <a href="https://github.com/akishor2563-radhe/Excel-Data-Analytics-Projects" target="_blank" class="btn btn-sm btn-glass">
+                <i class="fa-brands fa-github"></i> Repo ↗
+              </a>
+            </div>
           </div>
         </div>
 
       </div>
     </section>
 
+    <!-- Technical Proficiency Matrix -->
+    <section id="skills" data-aos="fade-up">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-microchip"></i> Core Technical Architecture</h2>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-box" data-tilt>
+          <h3><i class="fa-solid fa-database" style="color:#38bdf8;"></i> SQL & Database Querying</h3>
+          <div class="bar-item">
+            <div class="bar-top"><span>Joins (INNER, LEFT, SELF) & Aggregations</span><span>95%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:95%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-top"><span>Window Functions (ROW_NUMBER, RANK, LAG)</span><span>90%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:90%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-top"><span>CTEs, Subqueries & Schema Design</span><span>88%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:88%"></div></div>
+          </div>
+        </div>
+
+        <div class="skill-box" data-tilt>
+          <h3><i class="fa-solid fa-chart-simple" style="color:#fbbf24;"></i> Power BI & DAX Engineering</h3>
+          <div class="bar-item">
+            <div class="bar-top"><span>DAX (CALCULATE, SUMX, Time Intelligence)</span><span>92%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:92%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-top"><span>Star Schema Modeling & Power Query ETL</span><span>94%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:94%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-top"><span>Interactive Dashboards, KPIs & Tooltips</span><span>96%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:96%"></div></div>
+          </div>
+        </div>
+
+        <div class="skill-box" data-tilt>
+          <h3><i class="fa-solid fa-file-excel" style="color:#34d399;"></i> Advanced Excel 365</h3>
+          <div class="bar-item">
+            <div class="bar-top"><span>XLOOKUP, INDEX/MATCH, SUMIFS, Dynamic Arrays</span><span>95%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:95%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-top"><span>Pivot Tables, Power Pivot & Data Modeling</span><span>92%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:92%"></div></div>
+          </div>
+          <div class="bar-item">
+            <div class="bar-top"><span>Data Cleaning & Executive Dashboarding</span><span>94%</span></div>
+            <div class="bar-track"><div class="bar-fill" style="width:94%"></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <footer>
-      <p>© 2026 A Kishor · Data Analyst Portfolio</p>
-      <p style="margin-top: 0.25rem; font-size: 0.8rem;">Hosted with GitHub Pages</p>
+      <p>Designed & Engineered by <strong>A Kishor</strong> · Interactive BI Portfolio</p>
+      <p style="margin-top:0.3rem; font-size:0.78rem;">akishor2563@gmail.com · Kolkata, India</p>
     </footer>
   </div>
 
-  <!-- AOS Scripts -->
+  <!-- Interactive Code / Logic Modal -->
+  <div class="modal-overlay" id="logicModal" onclick="if(event.target===this) closeLogic()">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div class="window-dots">
+          <span class="dot dot-r"></span>
+          <span class="dot dot-y"></span>
+          <span class="dot dot-g"></span>
+        </div>
+        <span class="modal-title" id="modalTitle">query_inspector.sql</span>
+        <button class="close-modal" onclick="closeLogic()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body">
+        <pre id="modalCode"></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
   <script>
-    AOS.init({
-      duration: 800,
-      once: true,
-      easing: 'ease-out-cubic'
+    AOS.init({ duration: 750, once: true });
+
+    // 3D Tilt Init
+    VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+      max: 6,
+      speed: 400,
+      glare: true,
+      "max-glare": 0.12
     });
+
+    // Cursor Spotlight
+    const spotlight = document.getElementById('spotlight');
+    window.addEventListener('mousemove', e => {
+      spotlight.style.left = e.clientX + 'px';
+      spotlight.style.top = e.clientY + 'px';
+    });
+
+    // Typewriter Effect
+    const roles = [
+      "SQL Database & Query Specialist",
+      "Power BI & DAX Dashboard Developer",
+      "Advanced Excel 365 Data Modeler",
+      "Business Intelligence Analyst"
+    ];
+    let rIdx = 0, cIdx = 0, deleting = false;
+    const typeEl = document.getElementById('typewriter');
+
+    function typeLoop() {
+      const current = roles[rIdx];
+      typeEl.textContent = current.substring(0, cIdx);
+      if (!deleting && cIdx < current.length) {
+        cIdx++;
+        setTimeout(typeLoop, 65);
+      } else if (deleting && cIdx > 0) {
+        cIdx--;
+        setTimeout(typeLoop, 35);
+      } else {
+        deleting = !deleting;
+        if (!deleting) rIdx = (rIdx + 1) % roles.length;
+        setTimeout(typeLoop, deleting ? 1600 : 300);
+      }
+    }
+    typeLoop();
+
+    // Animated Number Counters
+    document.querySelectorAll('.counter').forEach(counter => {
+      const target = +counter.getAttribute('data-target');
+      const inc = target / 45;
+      let count = 0;
+      const update = () => {
+        count += inc;
+        if (count < target) {
+          counter.innerText = Math.ceil(count).toLocaleString();
+          requestAnimationFrame(update);
+        } else {
+          counter.innerText = target.toLocaleString();
+        }
+      };
+      update();
+    });
+
+    // Interactive Slicer Filter
+    function filterProjects(cat, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('.project-card').forEach(card => {
+        if (cat === 'all' || card.dataset.category === cat) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Code Snippet Database
+    const snippets = {
+      sql1: {
+        title: "retail_sales_window_functions.sql",
+        code: `-- 1. Rank Top Products per City using DENSE_RANK & CTE
+WITH CityProductSales AS (
+    SELECT 
+        c.city,
+        p.product_name,
+        SUM(o.quantity * p.price) AS total_revenue,
+        DENSE_RANK() OVER (
+            PARTITION BY c.city 
+            ORDER BY SUM(o.quantity * p.price) DESC
+        ) AS revenue_rank
+    FROM orders o
+    INNER JOIN customers c ON o.customer_id = c.customer_id
+    INNER JOIN products p ON o.product_id = p.product_id
+    GROUP BY c.city, p.product_name
+)
+SELECT * FROM CityProductSales
+WHERE revenue_rank <= 3;
+
+-- 2. Track Order-over-Order Variance using LAG()
+SELECT 
+    customer_id,
+    order_date,
+    order_amount,
+    LAG(order_amount, 1, 0) OVER (
+        PARTITION BY customer_id ORDER BY order_date
+    ) AS prev_order_amount
+FROM orders;`
+      },
+      pbi1: {
+        title: "mobile_sales_dax_measures.dax",
+        code: `// 1. Total Revenue using Iterator Function SUMX
+Total Revenue = 
+SUMX(
+    'Sales_Fact',
+    'Sales_Fact'[Units_Sold] * RELATED('Dim_Product'[Unit_Price])
+)
+
+// 2. Previous Month Revenue & MoM% Growth
+PM Revenue = 
+CALCULATE(
+    [Total Revenue],
+    PREVIOUSMONTH('Dim_Calendar'[Date])
+)
+
+MoM Growth % = 
+DIVIDE(
+    [Total Revenue] - [PM Revenue],
+    [PM Revenue],
+    0
+)`
+      },
+      pbi2: {
+        title: "electroglobal_star_schema.dax",
+        code: `// Dynamic High-Value Region Revenue Share %
+Region Revenue % = 
+VAR CurrentRegionRev = [Total Revenue]
+VAR AllRegionsRev = 
+    CALCULATE(
+        [Total Revenue],
+        ALL('Dim_Territory')
+    )
+RETURN
+    DIVIDE(CurrentRegionRev, AllRegionsRev, 0)
+
+// YTD Cumulative Sales
+Revenue YTD = 
+TOTALYTD([Total Revenue], 'Dim_Date'[Date])`
+      },
+      pbi3: {
+        title: "global_regional_analytics.dax",
+        code: `// Net Profit Margin & Top Performing Territory
+Net Profit = [Total Revenue] - [Total COGS]
+
+Profit Margin % = 
+DIVIDE([Net Profit], [Total Revenue], 0)
+
+Top Brand Sales = 
+CALCULATE(
+    [Total Revenue],
+    TOPN(1, VALUES('Dim_Brand'[Brand_Name]), [Total Revenue], DESC)
+)`
+      },
+      excel1: {
+        title: "superstore_power_pivot_model.txt",
+        code: `// Excel Power Pivot DAX & Dynamic Array Formulas
+
+1. Average Order Value (AOV) :=
+   DIVIDE([Total Sales Revenue], DISTINCTCOUNT(Orders[Order_ID]))
+
+2. Customer Retention & Dynamic Lookup:
+   =XLOOKUP(A2, Customers[Customer_ID], Customers[Segment], "Not Found")
+
+3. Multi-Condition Regional Aggregation:
+   =SUMIFS(Orders[Sales], Orders[Region], "West", Orders[Category], "Technology")`
+      }
+    };
+
+    function openLogic(key) {
+      document.getElementById('modalTitle').innerText = snippets[key].title;
+      document.getElementById('modalCode').innerText = snippets[key].code;
+      document.getElementById('logicModal').classList.add('open');
+    }
+
+    function closeLogic() {
+      document.getElementById('logicModal').classList.remove('open');
+    }
   </script>
 </body>
 </html>

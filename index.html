@@ -4,18 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A Kishor | Data Analyst Portfolio</title>
+  
+  <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- AOS (Animate On Scroll) Library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+
   <style>
     :root {
-      --bg: #090d16;
-      --card-bg: rgba(22, 30, 49, 0.7);
+      --bg: #070b14;
+      --card-bg: rgba(17, 24, 39, 0.7);
       --card-border: rgba(255, 255, 255, 0.08);
       --primary: #38bdf8;
-      --primary-glow: rgba(56, 189, 248, 0.25);
+      --primary-glow: rgba(56, 189, 248, 0.3);
       --secondary: #818cf8;
       --accent: #34d399;
-      --text: #f1f5f9;
+      --text: #f8fafc;
       --text-muted: #94a3b8;
     }
 
@@ -26,25 +32,55 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.6;
+      overflow-x: hidden;
       background-image: 
-        radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.12) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(129, 140, 248, 0.12) 0px, transparent 50%);
+        radial-gradient(circle at 10% 20%, rgba(56, 189, 248, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(129, 140, 248, 0.08) 0%, transparent 40%);
       background-attachment: fixed;
       padding: 0 1.5rem;
     }
 
     .container {
-      max-width: 1100px;
+      max-width: 1200px;
       margin: 0 auto;
     }
 
+    /* Header & Hero */
     header {
-      padding: 4.5rem 0 3rem;
+      min-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
+      padding: 4rem 0 2rem;
+    }
+
+    .profile-wrapper {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .profile-img {
+      width: 135px;
+      height: 135px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--primary);
+      box-shadow: 0 0 30px var(--primary-glow);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .profile-img:hover {
+      transform: scale(1.06);
     }
 
     .badge {
@@ -54,11 +90,12 @@
       background: rgba(56, 189, 248, 0.1);
       border: 1px solid var(--primary-glow);
       color: var(--primary);
-      padding: 0.4rem 1rem;
+      padding: 0.4rem 1.1rem;
       border-radius: 9999px;
       font-size: 0.85rem;
       font-weight: 600;
-      margin-bottom: 1.25rem;
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(8px);
     }
 
     .badge-dot {
@@ -67,13 +104,20 @@
       background: var(--accent);
       border-radius: 50%;
       box-shadow: 0 0 10px var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
     }
 
     h1 {
-      font-size: 3rem;
+      font-size: 3.25rem;
       font-weight: 800;
       letter-spacing: -0.03em;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.5rem;
       background: linear-gradient(135deg, #ffffff 30%, var(--primary) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -83,14 +127,16 @@
       font-size: 1.25rem;
       color: var(--primary);
       font-weight: 600;
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.01em;
     }
 
     .bio {
       max-width: 680px;
-      margin: 0 auto 2rem;
+      margin: 0 auto 2.25rem;
       color: var(--text-muted);
       font-size: 1.05rem;
+      line-height: 1.7;
     }
 
     .header-links {
@@ -109,7 +155,7 @@
       font-size: 0.95rem;
       font-weight: 600;
       text-decoration: none;
-      transition: all 0.25s ease;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       cursor: pointer;
     }
 
@@ -120,30 +166,32 @@
     }
 
     .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 25px rgba(56, 189, 248, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(56, 189, 248, 0.45);
     }
 
     .btn-outline {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       color: var(--text);
+      backdrop-filter: blur(12px);
     }
 
     .btn-outline:hover {
-      background: rgba(255, 255, 255, 0.05);
-      border-color: rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(56, 189, 248, 0.4);
+      transform: translateY(-3px);
     }
 
+    /* Section Styling */
     section {
-      padding: 3rem 0;
+      padding: 4.5rem 0;
     }
 
     .section-title {
-      font-size: 1.75rem;
+      font-size: 1.85rem;
       font-weight: 700;
-      margin-bottom: 1.75rem;
+      margin-bottom: 2rem;
       display: flex;
       align-items: center;
       gap: 0.75rem;
@@ -151,53 +199,51 @@
 
     .section-title i {
       color: var(--primary);
-      font-size: 1.5rem;
+      font-size: 1.6rem;
     }
 
+    /* Skills Grid */
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.25rem;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.5rem;
     }
 
     .skill-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 1.5rem;
-      backdrop-filter: blur(12px);
-      transition: border-color 0.2s ease;
+      border-radius: 18px;
+      padding: 1.75rem;
+      backdrop-filter: blur(14px);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .skill-card:hover {
-      border-color: rgba(56, 189, 248, 0.35);
+      border-color: rgba(56, 189, 248, 0.4);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px -10px var(--primary-glow);
     }
 
     .skill-header {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
+      gap: 0.85rem;
+      margin-bottom: 1.25rem;
     }
 
     .skill-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.2rem;
+      font-size: 1.25rem;
     }
 
     .icon-sql { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
     .icon-pbi { background: rgba(245, 158, 11, 0.15); color: #f59e0b; }
     .icon-excel { background: rgba(16, 185, 129, 0.15); color: #10b981; }
-
-    .skill-card h3 {
-      font-size: 1.1rem;
-      font-weight: 600;
-    }
 
     .skill-tags {
       display: flex;
@@ -207,16 +253,17 @@
 
     .tag {
       background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      padding: 0.3rem 0.65rem;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      padding: 0.35rem 0.75rem;
       border-radius: 8px;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: #cbd5e1;
     }
 
+    /* Projects Grid */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
       gap: 1.5rem;
     }
 
@@ -228,14 +275,14 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      backdrop-filter: blur(12px);
-      transition: all 0.25s ease;
+      backdrop-filter: blur(14px);
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .project-card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(56, 189, 248, 0.4);
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+      transform: translateY(-6px);
+      border-color: rgba(56, 189, 248, 0.45);
+      box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.5);
     }
 
     .project-type {
@@ -244,57 +291,33 @@
       letter-spacing: 0.05em;
       font-weight: 700;
       color: var(--primary);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
     }
 
     .project-title {
-      font-size: 1.3rem;
+      font-size: 1.25rem;
       font-weight: 700;
-      margin-bottom: 0.75rem;
+      margin-bottom: 0.6rem;
       line-height: 1.35;
     }
 
     .project-desc {
       color: var(--text-muted);
       font-size: 0.9rem;
+      line-height: 1.6;
       margin-bottom: 1.25rem;
-    }
-
-    .project-points {
-      list-style: none;
-      margin-bottom: 1.25rem;
-    }
-
-    .project-points li {
-      position: relative;
-      padding-left: 1.25rem;
-      color: #cbd5e1;
-      font-size: 0.85rem;
-      margin-bottom: 0.4rem;
-    }
-
-    .project-points li::before {
-      content: "▹";
-      position: absolute;
-      left: 0;
-      color: var(--primary);
     }
 
     .project-tech {
       display: flex;
       flex-wrap: wrap;
-      gap: 0.4rem;
+      gap: 0.45rem;
       margin-bottom: 1.5rem;
-    }
-
-    .project-links {
-      display: flex;
-      gap: 0.75rem;
     }
 
     footer {
       border-top: 1px solid var(--card-border);
-      padding: 2.5rem 0;
+      padding: 3rem 0;
       text-align: center;
       color: var(--text-muted);
       font-size: 0.9rem;
@@ -305,7 +328,11 @@
 <body>
 
   <div class="container">
-    <header>
+    <!-- Hero / Intro -->
+    <header data-aos="fade-up" data-aos-duration="1000">
+      <div class="profile-wrapper">
+        <img src="profile.jpg" alt="A Kishor" class="profile-img" onerror="this.style.display='none'">
+      </div>
       <div class="badge">
         <span class="badge-dot"></span>
         Available for Data Analyst Roles
@@ -313,28 +340,31 @@
       <h1>A Kishor</h1>
       <p class="role">Data Analyst | SQL · Power BI · Advanced Excel</p>
       <p class="bio">
-        Aspiring Data Analyst skilled in writing complex SQL queries, building interactive Power BI dashboards, and developing robust analytical data models in Excel to turn raw business data into actionable decisions.
+        Data Analyst proficient in relational SQL data modeling, advanced Power BI business intelligence dashboards, and Excel reporting engines to transform complex data into actionable decisions.
       </p>
       <div class="header-links">
-        <a href="https://github.com/akishor2563-radhe" target="_blank" class="btn btn-outline">
-          <i class="fa-brands fa-github"></i> GitHub
+        <a href="resume.pdf" target="_blank" class="btn btn-primary">
+          <i class="fa-solid fa-file-pdf"></i> View Resume
         </a>
         <a href="https://www.linkedin.com/in/akishor020501" target="_blank" class="btn btn-outline">
           <i class="fa-brands fa-linkedin"></i> LinkedIn
         </a>
-        <a href="https://github.com/akishor2563-radhe" target="_blank" class="btn btn-primary">
-          <i class="fa-solid fa-folder-open"></i> View All Repositories
+        <a href="https://github.com/akishor2563-radhe?tab=repositories" target="_blank" class="btn btn-outline">
+          <i class="fa-brands fa-github"></i> All Repositories
         </a>
       </div>
     </header>
 
+    <!-- Technical Toolkit -->
     <section>
-      <h2 class="section-title"><i class="fa-solid fa-code"></i> Technical Toolkit</h2>
+      <h2 class="section-title" data-aos="fade-right" data-aos-duration="800">
+        <i class="fa-solid fa-code"></i> Technical Toolkit
+      </h2>
       <div class="skills-grid">
-        <div class="skill-card">
+        <div class="skill-card" data-aos="fade-up" data-aos-delay="100">
           <div class="skill-header">
             <div class="skill-icon icon-sql"><i class="fa-solid fa-database"></i></div>
-            <h3>SQL & Database</h3>
+            <h3>SQL & RDBMS</h3>
           </div>
           <div class="skill-tags">
             <span class="tag">MySQL</span>
@@ -342,11 +372,11 @@
             <span class="tag">Window Functions</span>
             <span class="tag">CTEs</span>
             <span class="tag">Subqueries</span>
-            <span class="tag">Data Aggregation</span>
+            <span class="tag">Aggregations</span>
           </div>
         </div>
 
-        <div class="skill-card">
+        <div class="skill-card" data-aos="fade-up" data-aos-delay="200">
           <div class="skill-header">
             <div class="skill-icon icon-pbi"><i class="fa-solid fa-chart-column"></i></div>
             <h3>Power BI</h3>
@@ -354,14 +384,14 @@
           <div class="skill-tags">
             <span class="tag">Power BI Desktop</span>
             <span class="tag">DAX Measures</span>
-            <span class="tag">Data Modeling</span>
+            <span class="tag">Star Schema</span>
             <span class="tag">Power Query ETL</span>
             <span class="tag">KPI Dashboards</span>
-            <span class="tag">Interactive Reports</span>
+            <span class="tag">Visual Analytics</span>
           </div>
         </div>
 
-        <div class="skill-card">
+        <div class="skill-card" data-aos="fade-up" data-aos-delay="300">
           <div class="skill-header">
             <div class="skill-icon icon-excel"><i class="fa-solid fa-file-excel"></i></div>
             <h3>Advanced Excel</h3>
@@ -378,22 +408,19 @@
       </div>
     </section>
 
+    <!-- Featured Projects -->
     <section>
-      <h2 class="section-title"><i class="fa-solid fa-layer-group"></i> Featured Projects</h2>
+      <h2 class="section-title" data-aos="fade-right" data-aos-duration="800">
+        <i class="fa-solid fa-layer-group"></i> Featured Projects
+      </h2>
       <div class="projects-grid">
 
-        <div class="project-card">
+        <!-- 1. SQL Retail Analytics -->
+        <div class="project-card" data-aos="fade-up" data-aos-delay="100">
           <div>
-            <div class="project-type">SQL Project</div>
+            <div class="project-type">Database & SQL</div>
             <h3 class="project-title">Retail & E-Commerce Sales Analytics</h3>
-            <p class="project-desc">
-              Engineered a normalized database across Customers, Products, and Orders to analyze transactional trends and sales performance.
-            </p>
-            <ul class="project-points">
-              <li>Executed multi-table INNER and LEFT JOINs to compute city and payment-level revenue.</li>
-              <li>Implemented Window Functions (ROW_NUMBER, DENSE_RANK) to rank top products.</li>
-              <li>Leveraged CTEs and LAG functions to track order sales variance and running totals.</li>
-            </ul>
+            <p class="project-desc">Normalized database schema across Customers, Products, and Orders using Multi-Table Joins, CTEs, and Window Functions.</p>
           </div>
           <div>
             <div class="project-tech">
@@ -402,54 +429,114 @@
               <span class="tag">CTEs</span>
               <span class="tag">Joins</span>
             </div>
-            <div class="project-links">
-              <a href="https://github.com/akishor2563-radhe/SQL-Retail-Sales-Analytics" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">
-                <i class="fa-brands fa-github"></i> View Repository
-              </a>
-            </div>
+            <a href="https://github.com/akishor2563-radhe/SQL-Retail-Sales-Analytics" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">
+              <i class="fa-brands fa-github"></i> View Project
+            </a>
           </div>
         </div>
 
-        <div class="project-card">
+        <!-- 2. Power BI Mobile Sales -->
+        <div class="project-card" data-aos="fade-up" data-aos-delay="200">
           <div>
-            <div class="project-type">Power BI Project</div>
-            <h3 class="project-title">Mobile Phone Sales Analytics Dashboard</h3>
-            <p class="project-desc">
-              Interactive multi-page BI executive dashboard evaluating mobile device sales trends across brands, channels, and payment modes.
-            </p>
-            <ul class="project-points">
-              <li>Engineered navigational reports for Executive Overview and Brand Performance deep-dives.</li>
-              <li>Formulated DAX measures for Revenue, Units Sold, and MoM% growth metrics.</li>
-              <li>Integrated dynamic slicers, synchronized cross-filters, and custom tooltips.</li>
-            </ul>
+            <div class="project-type">Power BI Dashboard</div>
+            <h3 class="project-title">Mobile Phone Sales Analytics</h3>
+            <p class="project-desc">Interactive dashboard tracking brand volume, revenue performance, and regional sales KPIs with customized DAX.</p>
           </div>
           <div>
             <div class="project-tech">
               <span class="tag">Power BI</span>
               <span class="tag">DAX</span>
-              <span class="tag">Power Query</span>
+              <span class="tag">ETL</span>
               <span class="tag">Data Modeling</span>
             </div>
-            <div class="project-links">
-              <a href="https://github.com/akishor2563-radhe/Mobile-Phone-Sales-Analysis-Power-BI" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">
-                <i class="fa-brands fa-github"></i> View Repository
-              </a>
-            </div>
+            <a href="https://github.com/akishor2563-radhe/Mobile-Phone-Sales-Analysis-PowerBI" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">
+              <i class="fa-brands fa-github"></i> View Project
+            </a>
           </div>
         </div>
 
-        <div class="project-card">
+        <!-- 3. Power BI ElectroGlobal -->
+        <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+          <div>
+            <div class="project-type">Power BI Dashboard</div>
+            <h3 class="project-title">ElectroGlobal Executive Dashboard</h3>
+            <p class="project-desc">Enterprise-grade dashboard built for ElectroGlobal Inc. featuring multi-table data modeling, star schema, and advanced DAX.</p>
+          </div>
+          <div>
+            <div class="project-tech">
+              <span class="tag">Power BI</span>
+              <span class="tag">Star Schema</span>
+              <span class="tag">Complex DAX</span>
+            </div>
+            <a href="https://github.com/akishor2563-radhe/ElectroGlobal-Executive-Dashboard-PowerBI" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">
+              <i class="fa-brands fa-github"></i> View Project
+            </a>
+          </div>
+        </div>
+
+        <!-- 4. Power BI Global Sales Regional -->
+        <div class="project-card" data-aos="fade-up" data-aos-delay="100">
+          <div>
+            <div class="project-type">Power BI Dashboard</div>
+            <h3 class="project-title">Global Sales & Regional Analytics</h3>
+            <p class="project-desc">Global sales revenue and regional analytics dashboard built with multi-table relational datasets for tracking territory KPIs.</p>
+          </div>
+          <div>
+            <div class="project-tech">
+              <span class="tag">Power BI</span>
+              <span class="tag">Territory Analysis</span>
+              <span class="tag">DAX</span>
+            </div>
+            <a href="https://github.com/akishor2563-radhe/Global-Sales-Regional-Analytics-PowerBI" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">
+              <i class="fa-brands fa-github"></i> View Project
+            </a>
+          </div>
+        </div>
+
+        <!-- 5. Power BI Executive Sales -->
+        <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+          <div>
+            <div class="project-type">Power BI Dashboard</div>
+            <h3 class="project-title">Executive Sales & Order Performance</h3>
+            <p class="project-desc">Executive-level sales and order fulfillment performance dashboard analyzing transactional trends, margins, and operational metrics.</p>
+          </div>
+          <div>
+            <div class="project-tech">
+              <span class="tag">Power BI</span>
+              <span class="tag">Order Analytics</span>
+              <span class="tag">KPI Cards</span>
+            </div>
+            <a href="https://github.com/akishor2563-radhe/Executive-Sales-Dashboard-PowerBI" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">
+              <i class="fa-brands fa-github"></i> View Project
+            </a>
+          </div>
+        </div>
+
+        <!-- 6. Power BI Sales Practice -->
+        <div class="project-card" data-aos="fade-up" data-aos-delay="300">
+          <div>
+            <div class="project-type">Power BI Dashboard</div>
+            <h3 class="project-title">Sales Practice Analysis Dashboard</h3>
+            <p class="project-desc">Practical retail sales dashboard utilizing calculated columns, time-intelligence DAX measures, and drill-down reporting filters.</p>
+          </div>
+          <div>
+            <div class="project-tech">
+              <span class="tag">Power BI</span>
+              <span class="tag">Calculated Columns</span>
+              <span class="tag">DAX</span>
+            </div>
+            <a href="https://github.com/akishor2563-radhe/Sales-Practice-Dashboard-PowerBI" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">
+              <i class="fa-brands fa-github"></i> View Project
+            </a>
+          </div>
+        </div>
+
+        <!-- 7. Excel Capstone -->
+        <div class="project-card" data-aos="fade-up" data-aos-delay="100">
           <div>
             <div class="project-type">Excel Capstone</div>
             <h3 class="project-title">SuperStore Sales Analytics Dashboard</h3>
-            <p class="project-desc">
-              Multi-tab sales reporting system evaluating over 9,800 transactional records across regional hubs and product categories.
-            </p>
-            <ul class="project-points">
-              <li>Cleaned and structured transactional data using Power Query and Power Pivot.</li>
-              <li>Built 9+ custom measures to calculate Revenue ($2.25M), AOV, and customer metrics.</li>
-              <li>Delivered 4 executive dashboard views with interactive slicers and KPI tracking.</li>
-            </ul>
+            <p class="project-desc">Comprehensive reporting model analyzing 9,800+ retail transactions with Power Query, Power Pivot, and 4 dedicated dashboard tabs.</p>
           </div>
           <div>
             <div class="project-tech">
@@ -458,11 +545,29 @@
               <span class="tag">Power Pivot</span>
               <span class="tag">DAX</span>
             </div>
-            <div class="project-links">
-              <a href="https://github.com/akishor2563-radhe/Capstone-SuperStore-Sales-Analytics-Excel" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">
-                <i class="fa-brands fa-github"></i> View Repository
-              </a>
+            <a href="https://github.com/akishor2563-radhe/Capstone-SuperStore-Sales-Analytics-Excel" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">
+              <i class="fa-brands fa-github"></i> View Project
+            </a>
+          </div>
+        </div>
+
+        <!-- 8. Excel Analytics Repository -->
+        <div class="project-card" data-aos="fade-up" data-aos-delay="200">
+          <div>
+            <div class="project-type">Excel Analytics</div>
+            <h3 class="project-title">Excel Data Analytics Projects</h3>
+            <p class="project-desc">Collection of advanced Excel dashboard solutions, data cleaning pipelines, and business KPI sheets built for operational analysis.</p>
+          </div>
+          <div>
+            <div class="project-tech">
+              <span class="tag">Excel 365</span>
+              <span class="tag">Pivot Tables</span>
+              <span class="tag">Formulas</span>
+              <span class="tag">Cleansing</span>
             </div>
+            <a href="https://github.com/akishor2563-radhe/Excel-Data-Analytics-Projects" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">
+              <i class="fa-brands fa-github"></i> View Project
+            </a>
           </div>
         </div>
 
@@ -475,5 +580,14 @@
     </footer>
   </div>
 
+  <!-- AOS Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      once: true,
+      easing: 'ease-out-cubic'
+    });
+  </script>
 </body>
 </html>
